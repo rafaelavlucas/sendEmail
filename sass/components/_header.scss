@@ -1,0 +1,15 @@
+.header {
+   &__title {
+      @include accentFont($font22, $bold);
+      color: var(--headerTitle);
+
+      @include phablet {
+         font-size: $font18;
+      }
+   }
+   &__subtitle {
+      @include bodyFont($font14, $regular);
+      color: var(--headerSubtitle);
+      margin-top: 8px;
+   }
+}

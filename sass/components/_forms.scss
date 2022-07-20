@@ -1,0 +1,117 @@
+.forms {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   gap: 16px;
+   margin-top: 24px;
+
+   .input,
+   .textArea {
+      position: relative;
+      width: 100%;
+      display: flex;
+      align-items: center;
+
+      input,
+      textarea {
+         @include bodyFont($font14, $regular);
+         background: var(--inputBg);
+         border-radius: 8px;
+         box-shadow: inset 0px 0px 0px 1px var(--inputOutline);
+         color: var(--inputText);
+         width: 100%;
+         height: 100%;
+         padding: 0 16px;
+         transition: all 0.2s ease;
+
+         &::placeholder {
+            @include accentFont($font12, $regular);
+            color: var(--inputText);
+            opacity: 0.6;
+            transition: all 0.2s ease;
+         }
+         &:focus {
+            box-shadow: inset 0px 0px 0px 2px var(--inputOutline);
+            &::placeholder {
+               opacity: 1;
+            }
+         }
+      }
+   }
+
+   .input {
+      height: 40px;
+
+      .button.icon {
+         position: absolute;
+         right: 4px;
+      }
+   }
+
+   .inputIcon {
+      input {
+         padding: 0 48px 0 16px;
+      }
+   }
+
+   .textArea {
+      height: 180px;
+
+      textarea {
+         resize: none;
+         padding: 16px;
+      }
+   }
+
+   .checkbox {
+      gap: 16px;
+      align-items: flex-start;
+      height: auto;
+      input[type="checkbox"] {
+         position: relative;
+         cursor: pointer;
+         appearance: none;
+         width: 24px;
+         min-width: 24px;
+         height: 24px;
+         min-height: 24px;
+         padding: 0;
+         border-radius: 4px;
+
+         &:focus {
+            box-shadow: inset 0px 0px 0px 1px var(--inputOutline);
+         }
+      }
+
+      input[type="checkbox"]:after {
+         font-family: "feather" !important;
+         content: "\e92b";
+         display: block;
+         width: 24px;
+         height: 24px;
+         font-size: 22px;
+         position: absolute;
+         top: 0px;
+         left: 0px;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         opacity: 0;
+         transition: all 0.2s ease;
+         transform: scale(0.5);
+      }
+      input[type="checkbox"]:checked:after {
+         opacity: 1;
+         transform: scale(1);
+      }
+
+      label {
+         @include bodyFont($font12, $regular);
+         color: var(--inputLabel);
+      }
+   }
+
+   .buttonSend {
+      margin-top: 16px;
+   }
+}

@@ -1,0 +1,59 @@
+.button {
+   @include accentFont($font16, $semibold);
+   background: var(--accentColor);
+   color: $neu-01;
+   height: 40px;
+   padding: 0 24px;
+   border-radius: 10px;
+   line-height: 1.375rem;
+   cursor: pointer;
+   transition: all 0.3s ease;
+   width: fit-content;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   position: relative;
+   overflow: hidden;
+   z-index: 0;
+
+   &:before {
+      content: "";
+      position: absolute;
+      width: 0%;
+      height: 100%;
+      background: var(--accentColor);
+      transform: rotate(-180deg);
+      right: 0;
+      top: 0;
+      z-index: -1;
+      opacity: 0;
+      transition: all 0.3s ease;
+   }
+
+   &:hover {
+      transform: translateY(2px);
+      &:before {
+         opacity: 1;
+         width: 100%;
+         left: 0;
+         right: inherit;
+      }
+   }
+
+   &.icon {
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      border-radius: 4px;
+      i {
+         width: 24px;
+         height: 24px;
+         font-size: 23px;
+         //  transform: scale(0.95);
+      }
+
+      &:hover {
+         transform: none;
+      }
+   }
+}

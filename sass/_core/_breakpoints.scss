@@ -1,0 +1,43 @@
+// Breakpoints - Media Queries
+$desktop: 1440px; // From 1440 to 1280
+$laptop: 1279px; // From 1279 to 1024
+$tablet: 1023px; // From 1023 to 768
+$phablet: 767px; // From 767 to 512
+$mobile: 511px; // From 511 to 360
+$mobile-small: 359px; // From 359 to 0
+
+@mixin desktop {
+   @media (max-width: #{$desktop}) {
+      @content;
+   }
+}
+
+@mixin laptop {
+   @media (max-width: #{$laptop}) {
+      @content;
+   }
+}
+
+@mixin tablet {
+   @media (max-width: #{$tablet}) {
+      @content;
+   }
+}
+
+@mixin phablet {
+   @media (max-width: #{$phablet}) {
+      @content;
+   }
+}
+
+@mixin mobile {
+   @media (max-width: #{$mobile}) {
+      @content;
+   }
+}
+
+@mixin mobile-small {
+   @media (max-width: #{$mobile-small}) {
+      @content;
+   }
+}

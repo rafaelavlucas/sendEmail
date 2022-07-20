@@ -1,0 +1,78 @@
+$gra-01: linear-gradient(90deg, #c64230 1.06%, #ea6b23 100%);
+$gra-02: linear-gradient(90deg, #e88b00 1.06%, #ecaa00 100%);
+$gra-03: linear-gradient(90deg, #5fa01d 1.06%, #94c22f 100%);
+$gra-04: linear-gradient(90deg, #209478 1.06%, #3acb97 100%);
+$gra-05: linear-gradient(90deg, #1c88ab 1.06%, #2dbcc6 100%);
+$gra-06: linear-gradient(90deg, #7c52a6 1.06%, #a671da 100%);
+
+$neu-01: #ffffff;
+$neu-02: #f5f5f5;
+$neu-03: #e7e7e7;
+$neu-04: #cbcbcb;
+$neu-05: #b4b4b4;
+$neu-06: #8a8a8a;
+$neu-07: #6c6c6c;
+$neu-08: #525252;
+$neu-09: #3a3a3a;
+$neu-10: #313131;
+
+// Light and Dark Mode
+:root {
+   --bgBody: #{$neu-03};
+   --blockBg: #{$neu-02};
+   // Header
+   --headerTitle: #{$neu-09};
+   --headerSubtitle: #{$neu-06};
+   // Accordion
+   --accordionButton: #{$neu-07};
+   --accordionBg: #{$neu-01};
+   --accordionBgHover: #{$neu-02};
+   --accordionBorder: #{$neu-03};
+   --accordionText: #{$neu-06};
+   --accordionTextHover: #{$neu-08};
+   // Forms
+   --inputBg: #{$neu-01};
+   --inputOutline: #{$neu-03};
+   --inputText: #{$neu-07};
+   --inputLabel: #{$neu-06};
+}
+
+[data-theme="dark"] {
+   --bgBody: #{$neu-10};
+   --blockBg: #{$neu-09};
+   // Header
+   --headerTitle: #{$neu-01};
+   --headerSubtitle: #{$neu-05};
+   // Accordion
+   --accordionButton: #{$neu-03};
+   --accordionBg: #{$neu-08};
+   --accordionBgHover: #{$neu-09};
+   --accordionBorder: #{$neu-07};
+   --accordionText: #{$neu-05};
+   --accordionTextHover: #{$neu-01};
+   // Forms
+   --inputBg: #{$neu-08};
+   --inputOutline: #{$neu-07};
+   --inputText: #{$neu-04};
+   --inputLabel: #{$neu-04};
+}
+
+// Color Themes
+[data-color="gra-01"] {
+   --accentColor: #{$gra-01};
+}
+[data-color="gra-02"] {
+   --accentColor: #{$gra-02};
+}
+[data-color="gra-03"] {
+   --accentColor: #{$gra-03};
+}
+[data-color="gra-04"] {
+   --accentColor: #{$gra-04};
+}
+[data-color="gra-05"] {
+   --accentColor: #{$gra-05};
+}
+[data-color="gra-06"] {
+   --accentColor: #{$gra-06};
+}

@@ -1,0 +1,13 @@
+.block {
+   background: var(--blockBg);
+   padding: 32px 40px;
+   box-shadow: 0px 4px 36px rgba(0, 0, 0, 0.05);
+   border-radius: 16px;
+   width: 100%;
+   @include tablet {
+      max-width: 480px;
+   }
+   @include phablet {
+      padding: 24px 16px;
+   }
+}

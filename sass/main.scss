@@ -1,0 +1,19 @@
+@import "_core/_breakpoints.scss";
+@import "_core/_colors.scss";
+@import "_core/_reset.scss";
+@import "_core/_typography.scss";
+@import "_core/_iconography.scss";
+@import "_core/_modules.scss";
+@import "_core/_components.scss";
+@import "_core/_layout.scss";
+
+html {
+   scroll-behavior: smooth;
+   font-size: 16px;
+}
+
+body {
+   width: 100vw;
+   font-family: $bodyFont;
+   background: var(--bgBody);
+}

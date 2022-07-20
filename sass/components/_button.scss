@@ -32,6 +32,7 @@
 
    &:hover {
       transform: translateY(2px);
+
       &:before {
          opacity: 1;
          width: 100%;
@@ -45,11 +46,14 @@
       height: 32px;
       padding: 0;
       border-radius: 4px;
+
       i {
          width: 24px;
          height: 24px;
-         font-size: 23px;
-         //  transform: scale(0.95);
+         // font-size: 23px;
+         display: flex;
+         justify-content: center;
+         transform: scale(0.95);
       }
 
       &:hover {

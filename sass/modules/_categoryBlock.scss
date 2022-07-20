@@ -1,2 +1,6 @@
 .categoryBlock {
+
+    @include tablet {
+        order: 2;
+    }
 }

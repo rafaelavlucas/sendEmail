@@ -1,4 +1,6 @@
 .header {
+   margin-bottom: 24px;
+
    &__title {
       @include accentFont($font22, $bold);
       color: var(--headerTitle);
@@ -7,6 +9,7 @@
          font-size: $font18;
       }
    }
+
    &__subtitle {
       @include bodyFont($font14, $regular);
       color: var(--headerSubtitle);

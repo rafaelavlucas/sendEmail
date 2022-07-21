@@ -5,12 +5,15 @@
    gap: 16px;
    margin-top: 24px;
 
-   .input,
-   .textArea {
+   &__input {
       position: relative;
       width: 100%;
       display: flex;
       align-items: center;
+      flex-direction: column;
+      justify-content: center;
+      height: 40px;
+      margin-bottom: 12px;
 
       input,
       textarea {
@@ -30,88 +33,111 @@
             opacity: 0.6;
             transition: all 0.2s ease;
          }
+
          &:focus {
             box-shadow: inset 0px 0px 0px 2px var(--inputOutline);
+
             &::placeholder {
                opacity: 1;
             }
          }
       }
-   }
 
-   .input {
-      height: 40px;
+      &--inputIcon {
+         @extend .forms__input;
 
-      .button.icon {
-         position: absolute;
-         right: 4px;
-      }
-   }
+         input {
+            padding: 0 48px 0 16px;
+         }
 
-   .inputIcon {
-      input {
-         padding: 0 48px 0 16px;
-      }
-   }
-
-   .textArea {
-      height: 180px;
-
-      textarea {
-         resize: none;
-         padding: 16px;
-      }
-   }
-
-   .checkbox {
-      gap: 16px;
-      align-items: flex-start;
-      height: auto;
-      input[type="checkbox"] {
-         position: relative;
-         cursor: pointer;
-         appearance: none;
-         width: 24px;
-         min-width: 24px;
-         height: 24px;
-         min-height: 24px;
-         padding: 0;
-         border-radius: 4px;
-
-         &:focus {
-            box-shadow: inset 0px 0px 0px 1px var(--inputOutline);
+         .button.icon {
+            position: absolute;
+            right: 4px;
          }
       }
 
-      input[type="checkbox"]:after {
-         font-family: "feather" !important;
-         content: "\e92b";
-         display: block;
-         width: 24px;
-         height: 24px;
-         font-size: 22px;
-         position: absolute;
-         top: 0px;
-         left: 0px;
-         display: flex;
-         align-items: center;
-         justify-content: center;
-         opacity: 0;
-         transition: all 0.2s ease;
-         transform: scale(0.5);
-      }
-      input[type="checkbox"]:checked:after {
-         opacity: 1;
-         transform: scale(1);
+      &--textArea {
+         @extend .forms__input;
+         height: 180px;
+
+         textarea {
+            resize: none;
+            padding: 16px;
+         }
       }
 
-      label {
-         @include bodyFont($font12, $regular);
-         color: var(--inputLabel);
+      &--checkbox {
+         @extend .forms__input;
+         gap: 16px;
+         align-items: flex-start;
+         height: auto;
+         flex-direction: row !important;
+
+         input[type="checkbox"] {
+            position: relative;
+            cursor: pointer;
+            appearance: none;
+            width: 24px;
+            min-width: 24px;
+            height: 24px;
+            min-height: 24px;
+            padding: 0;
+            border-radius: 4px;
+
+            &:focus {
+               box-shadow: inset 0px 0px 0px 1px var(--inputOutline);
+            }
+         }
+
+         input[type="checkbox"]:after {
+            font-family: "feather" !important;
+            content: "\e92b";
+            display: block;
+            width: 24px;
+            height: 24px;
+            font-size: 22px;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.2s ease;
+            transform: scale(0.5);
+         }
+
+         input[type="checkbox"]:checked:after {
+            opacity: 1;
+            transform: scale(1);
+         }
+
+         label {
+            @include bodyFont($font12, $regular);
+            color: var(--inputLabel);
+         }
       }
+
+      &.error {
+
+         input,
+         textarea {
+            box-shadow: inset 0px 0px 0px 1px $red;
+         }
+      }
+
    }
 
-   .buttonSend {
+   &__message {
+      @include bodyFont($font12, $regular);
+      position: absolute;
+      bottom: -22px;
+      left: 8px;
+      color: $red;
+
+   }
+
+   &__buttonSend {
       margin-top: 16px;
    }
 }

@@ -38,17 +38,20 @@ const categories: CategoriesInterface[] = [
 ];
 
 // Variables
+const tablet = 1023;
 let accordionButton: NodeListOf<HTMLElement>;
-const accordionList = document.querySelector(".accordionList") as HTMLElement;
 const categoryBlock = document.querySelector(".categoryBlock") as HTMLElement;
-
+const categoryList = document.querySelector(".categoryBlock__list") as HTMLElement;
 const categoryBlockContent = document.querySelector(".categoryBlock .block__content") as HTMLElement;
+const expandButton = document.querySelector(".categoryBlock__expandBtn") as HTMLElement;
 
-
-
+// Variable after Loading the Accordion Templates
 getCategories();
-
+const categoryListHeight = categoryList.scrollHeight;
 accordionButton = document.querySelectorAll(".accordion__button");
+const accordions = document.querySelectorAll(".accordion") as NodeListOf<HTMLElement>;
+const accordionLists = document.querySelectorAll(".accordion__list") as NodeListOf<HTMLElement>;
+
 
 
 // Events
@@ -57,6 +60,8 @@ accordionButton.forEach((button) => {
 });
 
 categoryBlockContent.addEventListener("scroll", addFadeOnScroll)
+
+expandButton.addEventListener("click", expandListOnMobile)
 
 
 // Functions
@@ -73,7 +78,7 @@ function getCategories() {
              </ul>
          </li>`;
 
-      accordionList.insertAdjacentHTML("beforeend", templateCategory);
+      categoryList.insertAdjacentHTML("beforeend", templateCategory);
 
       item.messages.forEach((el) => {
          let templateMessages = `<li class="accordion__listItem">${el}</li>`;
@@ -83,18 +88,23 @@ function getCategories() {
    });
 }
 
-function openAccordion(e,) {
+function openAccordion(e) {
+
    const currentAccordion = e.currentTarget.parentElement,
       currentList = currentAccordion.querySelector(".accordion__list");
 
+
    if (currentAccordion.classList.contains("open")) {
       currentAccordion.classList.remove("open");
-      currentList.style.maxHeight = 0;
-
+      currentList.style.maxHeight = "0";
+      categoryBlock.style.height = "auto";
+      categoryList.style.height = categoryListHeight + "px"
    } else {
       currentAccordion.classList.add("open");
       currentList.style.maxHeight = currentList.scrollHeight + "px";
+      categoryList.style.height = categoryList.scrollHeight + currentList.scrollHeight + "px";
    }
+
 
    addFadeOnclick(currentList)
 }
@@ -118,6 +128,31 @@ function addFadeOnScroll() {
       categoryBlock.classList.add("fadeBottom");
    }
 }
+
+function expandListOnMobile() {
+
+   if (window.innerWidth > tablet) return;
+
+   if (categoryBlock.classList.contains("show")) {
+      categoryBlock.classList.remove("show");
+      categoryList.style.height = "0";
+
+      // When Collapse the list, remove all open accordions and reset heights
+      accordions.forEach((accordion) => {
+         accordion.classList.remove("open");
+      });
+      accordionLists.forEach((list) => {
+         list.style.maxHeight = "0";
+      });
+
+   } else {
+      categoryBlock.classList.add("show");
+      categoryList.style.height = categoryList.scrollHeight + "px"
+   }
+
+}
+
+
 
 
 

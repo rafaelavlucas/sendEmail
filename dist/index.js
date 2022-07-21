@@ -117,214 +117,74 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"scripts/components/themes.ts":[function(require,module,exports) {
-"use strict";
+})({"node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+var bundleURL = null;
 
-var colors = ["gra-01", "gra-02", "gra-03", "gra-04", "gra-05", "gra-06"];
-var color = colors[Math.floor(Math.random() * colors.length)];
-var body = document.querySelector("body");
-var colorButtons = document.querySelectorAll(".mainNav__color");
-var randomButton = document.querySelector("[data-color='random']");
-var dataColor = body.getAttribute('data-color');
-var dataRandomAttr = body.getAttribute('data-random');
-var dataRandomBoolean = Boolean(dataRandomAttr); // Events
-
-colorButtons.forEach(function (color) {
-  color.addEventListener("click", changeTheme);
-});
-
-function changeTheme(e) {
-  var selectedColor = e.currentTarget.dataset.color;
-  colorButtons.forEach(function (color) {
-    color.classList.remove("selected");
-  });
-  e.currentTarget.classList.add("selected");
-
-  if (e.currentTarget.dataset.color !== "random") {
-    body.dataset.color = selectedColor;
-    body.dataset.random = "false";
-  } else {
-    body.dataset.random = "true";
-  }
-}
-
-function setRandomTheme() {
-  if (dataRandomAttr === "true") {
-    dataColor === color;
-    body.dataset.color = color;
-    randomButton.classList.add("selected");
-  }
-}
-
-setRandomTheme();
-},{}],"scripts/components/mainNav.ts":[function(require,module,exports) {
-"use strict";
-},{}],"scripts/components/forms.ts":[function(require,module,exports) {
-"use strict";
-
-var inputs = document.querySelectorAll('.forms__input');
-inputs.forEach(function (input) {
-  var _a;
-
-  (_a = input.querySelector('input')) === null || _a === void 0 ? void 0 : _a.addEventListener("blur", checkFilled);
-});
-
-function checkFilled(_ref) {
-  var target = _ref.target,
-      currentTarget = _ref.currentTarget;
-  var textVal = target.value;
-  var parent = currentTarget.closest(".forms__input"),
-      parentError = parent.querySelector(".forms__message");
-
-  if (textVal != "") {
-    // parent.classList.add("filled");
-    validateText(textVal, target);
-  } else {
-    parent.classList.remove("error");
-    parentError.innerHTML = "";
-  }
-}
-
-function validateText(text, target) {
-  var parent = target.closest(".forms__input"),
-      regex = new RegExp(parent.dataset.validate),
-      parentError = parent.querySelector(".forms__message"),
-      errorMessage = parent.dataset.error;
-  if (parent.dataset.validate == "undefined") return;
-
-  if (text.match(regex)) {
-    //if ok
-    parent.classList.remove("error");
-    parentError.innerHTML = "";
-  } //if error
-  else {
-    parent.classList.add("error");
-    parentError.innerHTML = errorMessage;
-  }
-}
-},{}],"scripts/components/accordion.ts":[function(require,module,exports) {
-"use strict";
-
-var categories = [{
-  category: "Categoria 1",
-  messages: ["Far far away, behind the world mountains, far from the countries Vokalia and Consonantia, theres live the blind texts. Separated", "Far far away, behind the world mountains, far from the countries Vokalia!", "Far far away, behind the world mountains, far from the countries Vokalia and Consonantia, theres live the blind texts. Far far away, behind the world mountains, far from the countries Vokalia and Consonantia, theres live the blind texts."]
-}, {
-  category: "Categoria 2",
-  messages: ["Far far away, behind the world mountains, far from the countries Vokalia!"]
-}, {
-  category: "Categoria 3",
-  messages: ["Far far away, behind the world mountains, far from the countries Vokalia and Consonantia, theres live the blind texts. Separated", "Far far away, behind the world mountains, far from the countries Vokalia!", "Far far away, behind the world mountains, far from the countries Vokalia and Consonantia, theres live the blind texts. Far far away, behind the world mountains, far from the countries Vokalia and Consonantia, theres live the blind texts."]
-}, {
-  category: "Categoria 4",
-  messages: ["Far far away, behind the world mountains, far from the countries Vokalia and Consonantia, theres live the blind texts. Separated", "Far far away, behind the world mountains, far from the countries Vokalia!", "Far far away, behind the world mountains, far from the countries Vokalia and Consonantia, theres live the blind texts. Far far away, behind the world mountains, far from the countries Vokalia and Consonantia, theres live the blind texts."]
-}]; // Variables
-
-var tablet = 1023;
-var accordionButton;
-var categoryBlock = document.querySelector(".categoryBlock");
-var categoryList = document.querySelector(".categoryBlock__list");
-var categoryBlockContent = document.querySelector(".categoryBlock .block__content");
-var expandButton = document.querySelector(".categoryBlock__expandBtn"); // Variable after Loading the Accordion Templates
-
-getCategories();
-var categoryListHeight = categoryList.scrollHeight;
-accordionButton = document.querySelectorAll(".accordion__button");
-var accordions = document.querySelectorAll(".accordion");
-var accordionLists = document.querySelectorAll(".accordion__list"); // Events
-
-accordionButton.forEach(function (button) {
-  button.addEventListener("click", openAccordion);
-});
-categoryBlockContent.addEventListener("scroll", addFadeOnScroll);
-expandButton.addEventListener("click", expandListOnMobile); // Functions
-
-function getCategories() {
-  categories.forEach(function (item, index) {
-    var templateCategory = "\n         <li class=\"accordion\">\n             <button class=\"accordion__button\">\n             ".concat(item.category, "\n             </button>\n             <ul class=\"accordion__list\">\n             </ul>\n         </li>");
-    categoryList.insertAdjacentHTML("beforeend", templateCategory);
-    item.messages.forEach(function (el) {
-      var templateMessages = "<li class=\"accordion__listItem\">".concat(el, "</li>");
-      document.querySelectorAll(".accordion__list")[index].insertAdjacentHTML("beforeend", templateMessages);
-    });
-  });
-}
-
-function openAccordion(e) {
-  var currentAccordion = e.currentTarget.parentElement,
-      currentList = currentAccordion.querySelector(".accordion__list");
-
-  if (currentAccordion.classList.contains("open")) {
-    currentAccordion.classList.remove("open");
-    currentList.style.maxHeight = "0";
-    categoryBlock.style.height = "auto";
-    categoryList.style.height = categoryListHeight + "px";
-  } else {
-    currentAccordion.classList.add("open");
-    currentList.style.maxHeight = currentList.scrollHeight + "px";
-    categoryList.style.height = categoryList.scrollHeight + currentList.scrollHeight + "px";
+function getBundleURLCached() {
+  if (!bundleURL) {
+    bundleURL = getBundleURL();
   }
 
-  addFadeOnclick(currentList);
+  return bundleURL;
 }
 
-function addFadeOnclick(currentList) {
-  if (categoryBlockContent.scrollHeight + currentList.scrollHeight > categoryBlockContent.clientHeight) {
-    categoryBlock.classList.add("fadeBottom");
-  } else {
-    categoryBlock.classList.remove("fadeBottom");
+function getBundleURL() {
+  // Attempt to find the URL of the current script and use that as the base URL
+  try {
+    throw new Error();
+  } catch (err) {
+    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
+
+    if (matches) {
+      return getBaseURL(matches[0]);
+    }
   }
+
+  return '/';
 }
 
-function addFadeOnScroll() {
-  var paddingBottom = window.getComputedStyle(categoryBlockContent, null).getPropertyValue('padding-bottom').split('px')[0];
+function getBaseURL(url) {
+  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)?\/[^/]+(?:\?.*)?$/, '$1') + '/';
+}
 
-  if (categoryBlockContent.scrollHeight - categoryBlockContent.clientHeight <= categoryBlockContent.scrollTop + Number(paddingBottom)) {
-    categoryBlock.classList.remove("fadeBottom");
-  } else {
-    categoryBlock.classList.add("fadeBottom");
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+},{}],"node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
+var bundle = require('./bundle-url');
+
+function updateLink(link) {
+  var newLink = link.cloneNode();
+
+  newLink.onload = function () {
+    link.remove();
+  };
+
+  newLink.href = link.href.split('?')[0] + '?' + Date.now();
+  link.parentNode.insertBefore(newLink, link.nextSibling);
+}
+
+var cssTimeout = null;
+
+function reloadCSS() {
+  if (cssTimeout) {
+    return;
   }
+
+  cssTimeout = setTimeout(function () {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+
+    for (var i = 0; i < links.length; i++) {
+      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
+        updateLink(links[i]);
+      }
+    }
+
+    cssTimeout = null;
+  }, 50);
 }
 
-function expandListOnMobile() {
-  if (window.innerWidth > tablet) return;
-
-  if (categoryBlock.classList.contains("show")) {
-    categoryBlock.classList.remove("show");
-    categoryList.style.height = "0"; // When Collapse the list, remove all open accordions and reset heights
-
-    accordions.forEach(function (accordion) {
-      accordion.classList.remove("open");
-    });
-    accordionLists.forEach(function (list) {
-      list.style.maxHeight = "0";
-    });
-  } else {
-    categoryBlock.classList.add("show");
-    categoryList.style.height = categoryList.scrollHeight + "px";
-  }
-}
-},{}],"scripts/main.ts":[function(require,module,exports) {
-"use strict";
-
-var blocks = document.querySelector(".blocks");
-var messageBlock = document.querySelector(".messageBlock");
-
-if (window.innerWidth > 1023) {
-  blocks.style.maxHeight = messageBlock.scrollHeight + "px";
-}
-},{}],"scripts/index.ts":[function(require,module,exports) {
-"use strict";
-
-require("./components/themes");
-
-require("./components/mainNav");
-
-require("./components/forms");
-
-require("./components/accordion");
-
-require("./main");
-},{"./components/themes":"scripts/components/themes.ts","./components/mainNav":"scripts/components/mainNav.ts","./components/forms":"scripts/components/forms.ts","./components/accordion":"scripts/components/accordion.ts","./main":"scripts/main.ts"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+module.exports = reloadCSS;
+},{"./bundle-url":"node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -528,5 +388,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","scripts/index.ts"], null)
-//# sourceMappingURL=/scripts.2ed900e3.js.map
+},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js"], null)
+//# sourceMappingURL=/index.js.map

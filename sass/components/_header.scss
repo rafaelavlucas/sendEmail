@@ -1,6 +1,10 @@
 .header {
    margin-bottom: 24px;
 
+   @include phablet {
+      margin-bottom: 16px;
+   }
+
    &__title {
       @include accentFont($font22, $bold);
       color: var(--headerTitle);

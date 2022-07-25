@@ -118,88 +118,147 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"scripts/components/themes.ts":[function(require,module,exports) {
-"use strict";
+"use strict"; // Variables
 
-var colors = ["gra-01", "gra-02", "gra-03", "gra-04", "gra-05", "gra-06"];
-var color = colors[Math.floor(Math.random() * colors.length)];
+var COLOR_THEME_OPTIONS = ["gra-01", "gra-02", "gra-03", "gra-04", "gra-05", "gra-06"],
+    SELECTED_BUTTON = "selected",
+    DARK_MODE = "dark",
+    RANDOM_THEME = "random",
+    TURN_ON_DARK_MODE = "on",
+    STORAGE_DARK_MODE = "themeModeDark",
+    STORAGE_COLOR_THEME = "themeModeDark";
+var html = document.querySelector("html");
 var body = document.querySelector("body");
+var randomColor = COLOR_THEME_OPTIONS[Math.floor(Math.random() * COLOR_THEME_OPTIONS.length)];
+var toggleButton = document.querySelector(".mainNav__toggle");
+var randomButton = document.querySelector("button[data-theme-color='random']");
 var colorButtons = document.querySelectorAll(".mainNav__color");
-var randomButton = document.querySelector("[data-color='random']");
-var dataColor = body.getAttribute('data-color');
-var dataRandomAttr = body.getAttribute('data-random');
-var dataRandomBoolean = Boolean(dataRandomAttr); // Events
+var fontButtons = document.querySelectorAll(".mainNav__font");
+var getThemeColor = body.getAttribute('data-theme-color');
+var getThemeRandom = body.getAttribute('data-theme-random');
+var getFontSize = html.getAttribute('data-font-size');
+var getStorageMode = localStorage.getItem(STORAGE_DARK_MODE);
+var getStorageColor = localStorage.getItem(STORAGE_COLOR_THEME); // Events
 
 colorButtons.forEach(function (color) {
-  color.addEventListener("click", changeTheme);
+  color.addEventListener("click", selectColorTheme);
 });
+fontButtons.forEach(function (font) {
+  font.addEventListener("click", selectFontSize);
+});
+toggleButton.addEventListener("click", setDarkMode); // Functions
 
-function changeTheme(e) {
-  var selectedColor = e.currentTarget.dataset.color;
+function selectColorTheme(e) {
+  var selectedColor = e.currentTarget.dataset.themeColor;
   colorButtons.forEach(function (color) {
-    color.classList.remove("selected");
+    color.classList.remove(SELECTED_BUTTON);
   });
-  e.currentTarget.classList.add("selected");
+  e.currentTarget.classList.add(SELECTED_BUTTON);
+  changeColorTheme(e, selectedColor);
+}
 
-  if (e.currentTarget.dataset.color !== "random") {
-    body.dataset.color = selectedColor;
-    body.dataset.random = "false";
+function changeColorTheme(e, selectedColor) {
+  if (e.currentTarget.dataset.themeColor !== RANDOM_THEME) {
+    body.dataset.themeColor = selectedColor;
+    body.dataset.themeRandom = "false";
   } else {
-    body.dataset.random = "true";
+    body.dataset.themeRandom = "true";
   }
 }
 
-function setRandomTheme() {
-  if (dataRandomAttr === "true") {
-    dataColor === color;
-    body.dataset.color = color;
-    randomButton.classList.add("selected");
+function setRandomThemeOnLoad() {
+  if (getThemeRandom === "true") {
+    getThemeColor === randomColor;
+    body.dataset.themeColor = randomColor;
+    randomButton.classList.add(SELECTED_BUTTON);
   }
 }
 
-setRandomTheme();
-},{}],"scripts/components/mainNav.ts":[function(require,module,exports) {
-"use strict";
+function darkModeStorage() {
+  if (getStorageMode != "false") {
+    body.dataset.themeMode = DARK_MODE;
+    toggleButton.classList.add(TURN_ON_DARK_MODE);
+    localStorage.setItem(STORAGE_DARK_MODE, "true");
+  }
+
+  ;
+}
+
+function setDarkMode() {
+  getStorageMode = localStorage.getItem(STORAGE_DARK_MODE);
+
+  if (getStorageMode == "false") {
+    body.dataset.themeMode = DARK_MODE;
+    toggleButton.classList.add(TURN_ON_DARK_MODE);
+    getStorageMode = localStorage.setItem(STORAGE_DARK_MODE, "true");
+  } else {
+    body.dataset.themeMode = "";
+    toggleButton.classList.remove(TURN_ON_DARK_MODE);
+    getStorageMode = localStorage.setItem(STORAGE_DARK_MODE, "false");
+  }
+}
+
+function selectFontSize(e) {
+  var selectedFont = e.currentTarget.dataset.fontSize;
+  fontButtons.forEach(function (font) {
+    font.classList.remove(SELECTED_BUTTON);
+  });
+  e.currentTarget.classList.add(SELECTED_BUTTON);
+  changeFontSize(e, selectedFont);
+}
+
+function changeFontSize(e, selectedFont) {
+  if (e.currentTarget.dataset.fontSize !== "normal") {
+    html.dataset.fontSize = selectedFont;
+  } else {
+    html.dataset.fontSize = "normal";
+  }
+}
+
+setRandomThemeOnLoad();
+darkModeStorage();
 },{}],"scripts/components/forms.ts":[function(require,module,exports) {
-"use strict";
+"use strict"; // Variables
 
-var inputs = document.querySelectorAll('.forms__input');
+var ERROR_INPUT = "error",
+    FORMS_INPUT_SELECTOR = ".forms__input",
+    FORMS_MESSAGE_SELECTOR = ".forms__message";
+var inputs = document.querySelectorAll(FORMS_INPUT_SELECTOR); // Events
+
 inputs.forEach(function (input) {
   var _a;
 
-  (_a = input.querySelector('input')) === null || _a === void 0 ? void 0 : _a.addEventListener("blur", checkFilled);
-});
+  (_a = input.querySelector('input')) === null || _a === void 0 ? void 0 : _a.addEventListener("blur", checkFilledInput);
+}); // Functions 
 
-function checkFilled(_ref) {
+function checkFilledInput(_ref) {
   var target = _ref.target,
       currentTarget = _ref.currentTarget;
-  var textVal = target.value;
-  var parent = currentTarget.closest(".forms__input"),
-      parentError = parent.querySelector(".forms__message");
+  var inputValue = target.value;
+  var inputParent = currentTarget.closest(FORMS_INPUT_SELECTOR),
+      inputMessage = inputParent.querySelector(FORMS_MESSAGE_SELECTOR);
 
-  if (textVal != "") {
-    // parent.classList.add("filled");
-    validateText(textVal, target);
+  if (inputValue) {
+    validateInputText(inputValue, target);
   } else {
-    parent.classList.remove("error");
-    parentError.innerHTML = "";
+    inputParent.classList.remove(ERROR_INPUT);
+    inputMessage.innerHTML = "";
   }
 }
 
-function validateText(text, target) {
-  var parent = target.closest(".forms__input"),
-      regex = new RegExp(parent.dataset.validate),
-      parentError = parent.querySelector(".forms__message"),
-      errorMessage = parent.dataset.error;
-  if (parent.dataset.validate == "undefined") return;
+function validateInputText(inputValue, target) {
+  var inputParent = target.closest(FORMS_INPUT_SELECTOR),
+      validationRegex = new RegExp(inputParent.dataset.validate),
+      inputMessage = inputParent.querySelector(FORMS_MESSAGE_SELECTOR),
+      errorMessage = inputParent.dataset.error;
+  if (inputParent.dataset.validate == "undefined") return;
 
-  if (text.match(regex)) {
-    //if ok
-    parent.classList.remove("error");
-    parentError.innerHTML = "";
-  } //if error
-  else {
-    parent.classList.add("error");
-    parentError.innerHTML = errorMessage;
+  if (inputValue.match(validationRegex)) {
+    inputParent.classList.remove(ERROR_INPUT);
+    inputMessage.innerHTML = "";
+  } else {
+    inputParent.classList.add(ERROR_INPUT);
+    inputMessage.innerHTML = errorMessage;
   }
 }
 },{}],"scripts/components/accordion.ts":[function(require,module,exports) {
@@ -219,12 +278,17 @@ var categories = [{
   messages: ["Far far away, behind the world mountains, far from the countries Vokalia and Consonantia, theres live the blind texts. Separated", "Far far away, behind the world mountains, far from the countries Vokalia!", "Far far away, behind the world mountains, far from the countries Vokalia and Consonantia, theres live the blind texts. Far far away, behind the world mountains, far from the countries Vokalia and Consonantia, theres live the blind texts."]
 }]; // Variables
 
+var OPEN_ACCORDION = "open",
+    SHOW_CATEGORIES = "show",
+    CONTAINER_FADE_BOTTOM = "fadeBottom";
 var tablet = 1023;
 var accordionButton;
 var categoryBlock = document.querySelector(".categoryBlock");
 var categoryList = document.querySelector(".categoryBlock__list");
 var categoryBlockContent = document.querySelector(".categoryBlock .block__content");
-var expandButton = document.querySelector(".categoryBlock__expandBtn"); // Variable after Loading the Accordion Templates
+var paddingBottom = window.getComputedStyle(categoryBlockContent, null).getPropertyValue('padding-bottom').split('px')[0];
+var expandButton = document.querySelector(".categoryBlock__expandBtn");
+var changeFontBtn = document.querySelectorAll(".mainNav__font"); // Variable after Loading the Accordion Templates
 
 getCategories();
 var categoryListHeight = categoryList.scrollHeight;
@@ -236,7 +300,10 @@ accordionButton.forEach(function (button) {
   button.addEventListener("click", openAccordion);
 });
 categoryBlockContent.addEventListener("scroll", addFadeOnScroll);
-expandButton.addEventListener("click", expandListOnMobile); // Functions
+expandButton.addEventListener("click", expandListOnMobile);
+changeFontBtn.forEach(function (font) {
+  font.addEventListener("click", cenas);
+}); // Functions
 
 function getCategories() {
   categories.forEach(function (item, index) {
@@ -253,15 +320,20 @@ function openAccordion(e) {
   var currentAccordion = e.currentTarget.parentElement,
       currentList = currentAccordion.querySelector(".accordion__list");
 
-  if (currentAccordion.classList.contains("open")) {
-    currentAccordion.classList.remove("open");
+  if (currentAccordion.classList.contains(OPEN_ACCORDION)) {
+    currentAccordion.classList.remove(OPEN_ACCORDION);
     currentList.style.maxHeight = "0";
     categoryBlock.style.height = "auto";
-    categoryList.style.height = categoryListHeight + "px";
+    scrollToItem(currentAccordion);
+
+    if (window.innerWidth < tablet) {
+      categoryList.style.height = categoryList.scrollHeight - currentAccordion.scrollHeight + 40 + "px";
+    }
   } else {
-    currentAccordion.classList.add("open");
+    currentAccordion.classList.add(OPEN_ACCORDION);
     currentList.style.maxHeight = currentList.scrollHeight + "px";
     categoryList.style.height = categoryList.scrollHeight + currentList.scrollHeight + "px";
+    scrollToItem(currentAccordion);
   }
 
   addFadeOnclick(currentList);
@@ -269,39 +341,143 @@ function openAccordion(e) {
 
 function addFadeOnclick(currentList) {
   if (categoryBlockContent.scrollHeight + currentList.scrollHeight > categoryBlockContent.clientHeight) {
-    categoryBlock.classList.add("fadeBottom");
+    categoryBlock.classList.add(CONTAINER_FADE_BOTTOM);
   } else {
-    categoryBlock.classList.remove("fadeBottom");
+    categoryBlock.classList.remove(CONTAINER_FADE_BOTTOM);
   }
 }
 
 function addFadeOnScroll() {
-  var paddingBottom = window.getComputedStyle(categoryBlockContent, null).getPropertyValue('padding-bottom').split('px')[0];
-
   if (categoryBlockContent.scrollHeight - categoryBlockContent.clientHeight <= categoryBlockContent.scrollTop + Number(paddingBottom)) {
-    categoryBlock.classList.remove("fadeBottom");
+    categoryBlock.classList.remove(CONTAINER_FADE_BOTTOM);
   } else {
-    categoryBlock.classList.add("fadeBottom");
+    categoryBlock.classList.add(CONTAINER_FADE_BOTTOM);
   }
 }
 
 function expandListOnMobile() {
   if (window.innerWidth > tablet) return;
 
-  if (categoryBlock.classList.contains("show")) {
-    categoryBlock.classList.remove("show");
+  if (categoryBlock.classList.contains(SHOW_CATEGORIES)) {
+    categoryBlock.classList.remove(SHOW_CATEGORIES);
     categoryList.style.height = "0"; // When Collapse the list, remove all open accordions and reset heights
 
     accordions.forEach(function (accordion) {
-      accordion.classList.remove("open");
+      accordion.classList.remove(OPEN_ACCORDION);
     });
     accordionLists.forEach(function (list) {
       list.style.maxHeight = "0";
     });
   } else {
-    categoryBlock.classList.add("show");
+    categoryBlock.classList.add(SHOW_CATEGORIES);
     categoryList.style.height = categoryList.scrollHeight + "px";
   }
+}
+
+function scrollToItem(currentAccordion) {
+  if (window.innerWidth < tablet) return;
+  setTimeout(function () {
+    currentAccordion.scrollIntoView({
+      block: "end",
+      behavior: "smooth",
+      inline: 'end'
+    });
+  }, 200);
+}
+
+function cenas() {
+  var sumHeight = 0;
+  accordions.forEach(function (item, index) {
+    item.addEventListener("transitionend", function () {
+      var accordionList = item.querySelector('.accordion__list');
+
+      if (item.classList.contains("open")) {
+        accordionList.style.maxHeight = accordionList.scrollHeight + "px";
+      }
+    });
+    console.log(index);
+    sumHeight += item.scrollHeight;
+    categoryList.style.height = sumHeight + "px"; // setTimeout(() => {
+    //    sumHeight += item.scrollHeight;
+    // }, 500);
+    // if (item.classList.contains("open")) {
+    //    if (window.innerWidth > tablet) {
+    //       setTimeout(() => {
+    //          list.style.maxHeight = list.scrollHeight + "px"
+    //       }, 450);
+    //    } else {
+    //       console.log(sumHeight)
+    //       setTimeout(() => {
+    //          console.log(sumHeight)
+    //          list.style.maxHeight = list.scrollHeight + "px"
+    //       }, 450);
+    //       setTimeout(() => {
+    //          categoryList.style.height = sumHeight + "px"
+    //       }, 600);
+    //    }
+    // };
+  }); // setTimeout(() => {
+  //    console.log(sumHeight)
+  //    categoryList.style.height = sumHeight + "px"
+  // }, 450);
+}
+},{}],"scripts/modules/mainNav.ts":[function(require,module,exports) {
+"use strict"; // Variables
+
+var OPEN_SETTINGS = "open",
+    STICKY_NAV = "sticky";
+var openSettingsBtn = document.querySelector('.mainNav__settingsBtn');
+var closeSettingsBtn = document.querySelector('.mainNav__settingsBtn--close');
+var settingsMobile = document.querySelector('.mainNav__settings');
+var mainNav = document.querySelector('.mainNav');
+var mainNavTop = mainNav.offsetTop; // Events
+
+openSettingsBtn.addEventListener("click", openSettingsMobile);
+closeSettingsBtn.addEventListener("click", closeSettingsMobile);
+
+window.onscroll = function () {
+  stickyNav();
+}; // Functions
+
+
+function openSettingsMobile() {
+  settingsMobile.classList.add(OPEN_SETTINGS);
+}
+
+function closeSettingsMobile() {
+  settingsMobile.classList.remove(OPEN_SETTINGS);
+}
+
+function stickyNav() {
+  if (window.pageYOffset >= mainNavTop + 2) {
+    mainNav.classList.add(STICKY_NAV);
+  } else {
+    mainNav.classList.remove(STICKY_NAV);
+  }
+}
+},{}],"scripts/modules/contactsBlock.ts":[function(require,module,exports) {
+"use strict";
+
+var tabletWidth = 1023,
+    contactsBlock = document.querySelector(".contactsBlock"),
+    contactsBtn = document.querySelector(".contactsBtn"),
+    allBlocks = document.querySelector(".blocks"),
+    messageBlock2 = document.querySelector(".messageBlock"),
+    messageBlockContent = document.querySelector(".messageBlock .block__content");
+var messagePaddingBottom = window.getComputedStyle(messageBlockContent, null).getPropertyValue('padding-bottom').split('px')[0]; // Events
+
+contactsBtn.addEventListener("click", showContactsBlock); // functions
+
+function setBlocksHeight() {
+  if (window.innerWidth < tabletWidth) return;
+  setTimeout(function () {
+    allBlocks.style.maxHeight = messageBlock2.scrollHeight + Number(messagePaddingBottom) + "px";
+  }, 200);
+}
+
+function showContactsBlock() {
+  contactsBlock.classList.add("show");
+  setBlocksHeight();
 }
 },{}],"scripts/main.ts":[function(require,module,exports) {
 "use strict";
@@ -317,14 +493,16 @@ if (window.innerWidth > 1023) {
 
 require("./components/themes");
 
-require("./components/mainNav");
-
 require("./components/forms");
 
 require("./components/accordion");
 
+require("./modules/mainNav");
+
+require("./modules/contactsBlock");
+
 require("./main");
-},{"./components/themes":"scripts/components/themes.ts","./components/mainNav":"scripts/components/mainNav.ts","./components/forms":"scripts/components/forms.ts","./components/accordion":"scripts/components/accordion.ts","./main":"scripts/main.ts"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./components/themes":"scripts/components/themes.ts","./components/forms":"scripts/components/forms.ts","./components/accordion":"scripts/components/accordion.ts","./modules/mainNav":"scripts/modules/mainNav.ts","./modules/contactsBlock":"scripts/modules/contactsBlock.ts","./main":"scripts/main.ts"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -352,7 +530,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56174" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63546" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

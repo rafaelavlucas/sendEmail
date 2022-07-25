@@ -3,17 +3,34 @@
 @import "_core/_colors.scss";
 @import "_core/_typography.scss";
 @import "_core/_iconography.scss";
-@import "_core/_modules.scss";
 @import "_core/_components.scss";
+@import "_core/_modules.scss";
 @import "_core/_layout.scss";
 
 html {
    scroll-behavior: smooth;
    font-size: 16px;
+
+   &[data-font-size="small"] {
+      font-size: 14px;
+   }
+
+   &[data-font-size="normal"] {
+      font-size: 16px;
+   }
+
+   &[data-font-size="large"] {
+      font-size: 18px;
+   }
 }
 
 body {
    width: 100vw;
    font-family: $bodyFont;
    background: var(--bgBody);
+
+}
+
+* {
+   transition: font-size 0.2s ease;
 }

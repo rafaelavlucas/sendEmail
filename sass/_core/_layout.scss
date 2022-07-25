@@ -1,3 +1,16 @@
+.content {
+   min-height: 100vh;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   padding: 120px 0;
+
+   @include tablet {
+      padding: 0;
+   }
+
+}
+
 .wrapper {
    max-width: $desktop;
    width: 100%;
@@ -22,6 +35,8 @@
    display: flex;
    justify-content: center;
    gap: 24px;
+   transition: all 0.3s ease;
+   overflow-x: hidden;
 
    @include laptop {
       grid-column: 1/13;
@@ -37,8 +52,6 @@
       grid-column: 1/7;
    }
 }
-
-
 
 :focus-visible {
    border-radius: 8px;

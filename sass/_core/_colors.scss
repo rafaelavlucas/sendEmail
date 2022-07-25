@@ -24,8 +24,11 @@ $red: #DF6251;
    --bgBody: #{$neu-03};
    --blockBg: #{$neu-02};
    // Main Nav
+   --mainNavBg: #{$neu-01};
    --settingsOutline: #{$neu-02};
    --settingsOutlineSelected: #{$neu-01};
+   --toggleBg: #{$neu-03};
+   --settingsText:#{$neu-07};
    // Header
    --headerTitle: #{$neu-09};
    --headerSubtitle: #{$neu-06};
@@ -43,13 +46,16 @@ $red: #DF6251;
    --inputLabel: #{$neu-06};
 }
 
-[data-theme="dark"] {
+[data-theme-mode="dark"] {
    --focus: #{$neu-01};
    --bgBody: #{$neu-10};
    --blockBg: #{$neu-09};
    // Main Nav
+   --mainNavBg: #{$neu-08};
    --settingsOutline: #{$neu-07};
    --settingsOutlineSelected: #{$neu-04};
+   --toggleBg: #{$neu-09};
+   --settingsText:#{$neu-05};
    // Header
    --headerTitle: #{$neu-01};
    --headerSubtitle: #{$neu-05};
@@ -68,26 +74,26 @@ $red: #DF6251;
 }
 
 // Color Themes
-[data-color="gra-01"] {
+[data-theme-color="gra-01"] {
    --accentColor: #{$gra-01};
 }
 
-[data-color="gra-02"] {
+[data-theme-color="gra-02"] {
    --accentColor: #{$gra-02};
 }
 
-[data-color="gra-03"] {
+[data-theme-color="gra-03"] {
    --accentColor: #{$gra-03};
 }
 
-[data-color="gra-04"] {
+[data-theme-color="gra-04"] {
    --accentColor: #{$gra-04};
 }
 
-[data-color="gra-05"] {
+[data-theme-color="gra-05"] {
    --accentColor: #{$gra-05};
 }
 
-[data-color="gra-06"] {
+[data-theme-color="gra-06"] {
    --accentColor: #{$gra-06};
 }

@@ -3,15 +3,89 @@
     height: 112px;
     display: flex;
     align-items: center;
+    z-index: 1;
+    transition: all 0.4s ease;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+
+    @include tablet {
+        position: sticky;
+        height: 64px;
+        margin-bottom: 24px;
+
+    }
+
+    &.sticky {
+        position: sticky;
+        top: 0;
+        background: var(--mainNavBg);
+        box-shadow: $shadow;
+
+
+    }
 
     &__content {
         grid-column: 1/13;
         display: flex;
+        justify-content: space-between;
+
     }
 
     &__settings {
         display: flex;
         gap: 48px;
+
+        @include tablet {
+            background: var(--mainNavBg);
+            width: 100%;
+            position: fixed;
+            left: 0;
+            top: -30%;
+            padding: 48px 24px;
+            flex-direction: column;
+            z-index: 2;
+            box-shadow: 0px 4px 80px rgba(0, 0, 0, 0.15);
+            gap: 40px;
+            border-bottom: 1px solid var(--settingsOutline);
+            opacity: 0;
+            transition: top 0.4s ease, opacity 0.2s ease;
+
+        }
+
+
+
+        &.open {
+            opacity: 1;
+            top: 0;
+        }
+    }
+
+    &__settingsBtn {
+        display: none;
+
+        @include tablet {
+            @include accentFont($font12, $regular);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--settingsText);
+
+            cursor: pointer;
+
+            i {
+                @include icon24;
+            }
+        }
+
+        &--close {
+            @extend .mainNav__settingsBtn;
+            position: absolute;
+            top: 24px;
+            right: 24px;
+
+        }
     }
 
     &__mode,
@@ -21,6 +95,98 @@
         display: flex;
         gap: 8px;
         align-items: center;
+
+        @include tablet {
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+    }
+
+    &__items {
+        display: flex;
+        gap: 8px;
+
+        @include tablet {
+            gap: 12px;
+            flex-wrap: wrap
+        }
+    }
+
+    &__text {
+        @include accentFont($font12, $regular);
+        color: var(--settingsText);
+    }
+
+    &__toggle {
+        position: relative;
+        width: 48px;
+        height: 24px;
+        background: var(--toggleBg);
+        border-radius: 40px;
+        border: 2px solid var(--settingsOutline);
+        display: flex;
+        align-items: center;
+        box-shadow: $shadow;
+        cursor: pointer;
+
+        &:before {
+            width: 16px;
+            height: 16px;
+            position: absolute;
+            content: '';
+            background: $neu-01;
+            border-radius: 50%;
+            left: 2px;
+            box-shadow: $shadow;
+            transition: all 0.3s ease;
+        }
+
+        &.on {
+            &:before {
+                left: 26px;
+                background: var(--accentColor);
+            }
+        }
+    }
+
+    &__font {
+        position: relative;
+        width: 24px;
+        height: 24px;
+        border: 2px solid var(--settingsOutline);
+        background: var(--toggleBg);
+        border-radius: 50%;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: $shadow;
+        opacity: 0.6;
+        transition: opacity 0.2s ease;
+        color: var(--settingsText);
+
+        &:nth-of-type(1) {
+            @include accentFont($font14, $semibold);
+            font-size: 14px;
+        }
+
+        &:nth-of-type(2) {
+            @include accentFont($font16, $semibold);
+            font-size: 16px;
+        }
+
+        &:nth-of-type(3) {
+            @include accentFont($font18, $semibold);
+            font-size: 18px;
+        }
+
+        &.selected {
+            border-color: var(--settingsOutlineSelected);
+            opacity: 1;
+        }
+
     }
 
     &__color {
@@ -37,23 +203,23 @@
         cursor: pointer;
         box-shadow: $shadow;
         opacity: 0.6;
-        transition: all 0.2s ease;
+        transition: opacity 0.2s ease;
 
-        &[data-color="random"] {
+        &[data-theme-color="random"] {
             overflow: hidden;
             background: transparent;
 
             span {
                 display: flex;
                 position: absolute;
-                width: 20%;
-                height: 32px;
+                width: 40px;
+                height: 18%;
                 background: $gra-02;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                left: 0px;
-                transform: rotate(45deg);
+                top: 1px;
+                transform: rotate(-45deg);
                 transform-origin: center center;
 
                 &:before,
@@ -62,23 +228,22 @@
                     height: 100%;
                     position: absolute;
                     content: '';
-
                 }
 
                 &:before {
-                    left: -100%;
+                    top: -97%;
                     background: $gra-01;
                 }
 
                 &:after {
-                    left: initial;
-                    right: -100%;
+                    top: initial;
+                    bottom: -97%;
                     background: $gra-03;
                 }
 
                 &:nth-of-type(2) {
-                    left: initial;
-                    right: 0px;
+                    top: initial;
+                    bottom: 1px;
                     background: $gra-05;
 
                     &:before {
@@ -86,7 +251,7 @@
                     }
 
                     &:after {
-                        right: -4px;
+                        bottom: -97%;
                         background: $gra-06;
                     }
                 }
@@ -103,4 +268,8 @@
         }
 
     }
+
+
+
+
 }

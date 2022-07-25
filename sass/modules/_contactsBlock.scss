@@ -1,0 +1,34 @@
+.contactsBlock {
+    // display: none;
+    opacity: 0;
+    visibility: hidden;
+
+    transition: transform 0.4s 0.1s ease, width 0.3s ease, opacity 0.3s 0.2s ease;
+
+    transform: translateX(-150%);
+    z-index: -1;
+    width: 0;
+
+    @include tablet {
+        transform: translateX(100%);
+        width: 100%;
+        position: absolute;
+        z-index: 1;
+        min-height: 100%;
+        top: 0;
+        right: 0;
+    }
+
+    &.show {
+        // display: flex;
+        width: calc(100% - 24px);
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(0%);
+        border-radius: 0;
+
+
+
+
+    }
+}

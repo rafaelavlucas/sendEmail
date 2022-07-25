@@ -1,46 +1,47 @@
+// Variables
+const
+    ERROR_INPUT = "error",
+    FORMS_INPUT_SELECTOR = ".forms__input",
+    FORMS_MESSAGE_SELECTOR = ".forms__message";
 
-const inputs = document.querySelectorAll('.forms__input') as NodeListOf<HTMLElement>;
+const inputs = document.querySelectorAll(FORMS_INPUT_SELECTOR) as NodeListOf<HTMLElement>;
 
 
+// Events
 inputs.forEach((input) => {
-    input.querySelector('input')?.addEventListener("blur", checkFilled);
+    input.querySelector('input')?.addEventListener("blur", checkFilledInput);
 })
 
-
-
-function checkFilled({ target, currentTarget }) {
-
-    let textVal = target.value;
-
+// Functions 
+function checkFilledInput({ target, currentTarget }) {
+    let inputValue = target.value;
     const
-        parent = currentTarget.closest(".forms__input"),
-        parentError = parent.querySelector(".forms__message");
+        inputParent = currentTarget.closest(FORMS_INPUT_SELECTOR),
+        inputMessage = inputParent.querySelector(FORMS_MESSAGE_SELECTOR);
 
-    if (textVal != "") {
-        // parent.classList.add("filled");
-        validateText(textVal, target);
+    if (inputValue) {
+        validateInputText(inputValue, target);
     } else {
-        parent.classList.remove("error");
-        parentError.innerHTML = ""
+        inputParent.classList.remove(ERROR_INPUT);
+        inputMessage.innerHTML = ""
     }
 }
 
-function validateText(text, target) {
+function validateInputText(inputValue, target) {
     const
-        parent = target.closest(".forms__input"),
-        regex = new RegExp(parent.dataset.validate),
-        parentError = parent.querySelector(".forms__message"),
-        errorMessage = parent.dataset.error;
+        inputParent = target.closest(FORMS_INPUT_SELECTOR),
+        validationRegex = new RegExp(inputParent.dataset.validate),
+        inputMessage = inputParent.querySelector(FORMS_MESSAGE_SELECTOR),
+        errorMessage = inputParent.dataset.error;
 
-    if (parent.dataset.validate == "undefined") return;
-    if (text.match(regex)) {
-        //if ok
-        parent.classList.remove("error");
-        parentError.innerHTML = ""
+    if (inputParent.dataset.validate == "undefined") return;
+
+    if (inputValue.match(validationRegex)) {
+        inputParent.classList.remove(ERROR_INPUT);
+        inputMessage.innerHTML = ""
     }
-    //if error
     else {
-        parent.classList.add("error");
-        parentError.innerHTML = errorMessage;
+        inputParent.classList.add(ERROR_INPUT);
+        inputMessage.innerHTML = errorMessage;
     }
 }

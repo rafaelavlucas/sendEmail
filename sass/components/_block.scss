@@ -7,7 +7,7 @@
    // height: auto;
    overflow: hidden;
    position: relative;
-   // transition: height 0.3s ease;
+
 
    @include tablet {
       max-height: unset;
@@ -47,7 +47,7 @@
    }
 
    &__content {
-      padding: 32px 40px;
+      padding: 40px 32px;
 
       max-height: 100%;
       overflow-y: auto;

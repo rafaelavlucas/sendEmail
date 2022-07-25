@@ -38,12 +38,22 @@ const categories: CategoriesInterface[] = [
 ];
 
 // Variables
+const
+   OPEN_ACCORDION = "open",
+   SHOW_CATEGORIES = "show",
+   CONTAINER_FADE_BOTTOM = "fadeBottom";
+
+
 const tablet = 1023;
 let accordionButton: NodeListOf<HTMLElement>;
+
 const categoryBlock = document.querySelector(".categoryBlock") as HTMLElement;
 const categoryList = document.querySelector(".categoryBlock__list") as HTMLElement;
 const categoryBlockContent = document.querySelector(".categoryBlock .block__content") as HTMLElement;
+let paddingBottom = window.getComputedStyle(categoryBlockContent, null).getPropertyValue('padding-bottom').split('px')[0];
 const expandButton = document.querySelector(".categoryBlock__expandBtn") as HTMLElement;
+const changeFontBtn = document.querySelectorAll(".mainNav__font") as NodeListOf<HTMLElement>;
+
 
 // Variable after Loading the Accordion Templates
 getCategories();
@@ -51,7 +61,6 @@ const categoryListHeight = categoryList.scrollHeight;
 accordionButton = document.querySelectorAll(".accordion__button");
 const accordions = document.querySelectorAll(".accordion") as NodeListOf<HTMLElement>;
 const accordionLists = document.querySelectorAll(".accordion__list") as NodeListOf<HTMLElement>;
-
 
 
 // Events
@@ -62,6 +71,10 @@ accordionButton.forEach((button) => {
 categoryBlockContent.addEventListener("scroll", addFadeOnScroll)
 
 expandButton.addEventListener("click", expandListOnMobile)
+
+changeFontBtn.forEach((font) => {
+   font.addEventListener("click", cenas);
+});
 
 
 // Functions
@@ -89,20 +102,26 @@ function getCategories() {
 }
 
 function openAccordion(e) {
-
    const currentAccordion = e.currentTarget.parentElement,
       currentList = currentAccordion.querySelector(".accordion__list");
 
-
-   if (currentAccordion.classList.contains("open")) {
-      currentAccordion.classList.remove("open");
+   if (currentAccordion.classList.contains(OPEN_ACCORDION)) {
+      currentAccordion.classList.remove(OPEN_ACCORDION);
       currentList.style.maxHeight = "0";
       categoryBlock.style.height = "auto";
-      categoryList.style.height = categoryListHeight + "px"
+
+      scrollToItem(currentAccordion)
+
+      if (window.innerWidth < tablet) {
+         categoryList.style.height = categoryList.scrollHeight - currentAccordion.scrollHeight + 40 + "px"
+      }
+
    } else {
-      currentAccordion.classList.add("open");
+      currentAccordion.classList.add(OPEN_ACCORDION);
       currentList.style.maxHeight = currentList.scrollHeight + "px";
       categoryList.style.height = categoryList.scrollHeight + currentList.scrollHeight + "px";
+
+      scrollToItem(currentAccordion)
    }
 
 
@@ -111,21 +130,20 @@ function openAccordion(e) {
 
 function addFadeOnclick(currentList) {
    if (categoryBlockContent.scrollHeight + currentList.scrollHeight > categoryBlockContent.clientHeight) {
-      categoryBlock.classList.add("fadeBottom");
+      categoryBlock.classList.add(CONTAINER_FADE_BOTTOM);
    } else {
-      categoryBlock.classList.remove("fadeBottom");
+      categoryBlock.classList.remove(CONTAINER_FADE_BOTTOM);
    }
 }
 
 function addFadeOnScroll() {
-   let paddingBottom = window.getComputedStyle(categoryBlockContent, null).getPropertyValue('padding-bottom').split('px')[0];
 
    if (
       categoryBlockContent.scrollHeight - categoryBlockContent.clientHeight <=
       categoryBlockContent.scrollTop + Number(paddingBottom)) {
-      categoryBlock.classList.remove("fadeBottom");
+      categoryBlock.classList.remove(CONTAINER_FADE_BOTTOM);
    } else {
-      categoryBlock.classList.add("fadeBottom");
+      categoryBlock.classList.add(CONTAINER_FADE_BOTTOM);
    }
 }
 
@@ -133,25 +151,94 @@ function expandListOnMobile() {
 
    if (window.innerWidth > tablet) return;
 
-   if (categoryBlock.classList.contains("show")) {
-      categoryBlock.classList.remove("show");
+   if (categoryBlock.classList.contains(SHOW_CATEGORIES)) {
+      categoryBlock.classList.remove(SHOW_CATEGORIES);
       categoryList.style.height = "0";
 
       // When Collapse the list, remove all open accordions and reset heights
       accordions.forEach((accordion) => {
-         accordion.classList.remove("open");
+         accordion.classList.remove(OPEN_ACCORDION);
       });
       accordionLists.forEach((list) => {
          list.style.maxHeight = "0";
       });
 
    } else {
-      categoryBlock.classList.add("show");
+      categoryBlock.classList.add(SHOW_CATEGORIES);
       categoryList.style.height = categoryList.scrollHeight + "px"
    }
 
 }
 
+function scrollToItem(currentAccordion) {
+   if (window.innerWidth < tablet) return
+
+   setTimeout(() => {
+      currentAccordion.scrollIntoView({ block: "end", behavior: "smooth", inline: 'end' });
+   }, 200);
+}
+
+function cenas() {
+   let sumHeight = 0;
+
+   accordions.forEach((item, index) => {
+      item.addEventListener("transitionend", () => {
+
+         const accordionList = item.querySelector('.accordion__list') as HTMLElement;
+
+         if (item.classList.contains("open")) {
+            accordionList.style.maxHeight = accordionList.scrollHeight + "px"
+         }
+
+
+      })
+
+      console.log(index)
+      sumHeight += item.scrollHeight;
+      categoryList.style.height = sumHeight + "px"
+
+
+
+
+      // setTimeout(() => {
+      //    sumHeight += item.scrollHeight;
+
+      // }, 500);
+
+      // if (item.classList.contains("open")) {
+      //    if (window.innerWidth > tablet) {
+
+      //       setTimeout(() => {
+      //          list.style.maxHeight = list.scrollHeight + "px"
+      //       }, 450);
+
+      //    } else {
+      //       console.log(sumHeight)
+      //       setTimeout(() => {
+      //          console.log(sumHeight)
+      //          list.style.maxHeight = list.scrollHeight + "px"
+
+
+      //       }, 450);
+
+
+      //       setTimeout(() => {
+      //          categoryList.style.height = sumHeight + "px"
+      //       }, 600);
+
+      //    }
+      // };
+   })
+
+   // setTimeout(() => {
+   //    console.log(sumHeight)
+   //    categoryList.style.height = sumHeight + "px"
+
+   // }, 450);
+
+
+
+}
 
 
 

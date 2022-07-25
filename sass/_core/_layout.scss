@@ -5,8 +5,15 @@
    justify-content: center;
    padding: 120px 0;
 
+
+
    @include tablet {
       padding: 0;
+      position: relative;
+      overflow-x: hidden;
+      min-height: unset;
+      padding-bottom: 56px;
+
    }
 
 }
@@ -36,7 +43,7 @@
    justify-content: center;
    gap: 24px;
    transition: all 0.3s ease;
-   overflow-x: hidden;
+
 
    @include laptop {
       grid-column: 1/13;
@@ -46,6 +53,8 @@
       grid-column: 2/6;
       flex-direction: column;
       align-items: center;
+      overflow-x: hidden;
+
    }
 
    @include phablet {

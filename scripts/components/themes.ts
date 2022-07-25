@@ -6,7 +6,7 @@ const
     RANDOM_THEME = "random",
     TURN_ON_DARK_MODE = "on",
     STORAGE_DARK_MODE = "themeModeDark",
-    STORAGE_COLOR_THEME = "themeModeDark";
+    STORAGE_COLOR_THEME = "themeColor";
 
 const html = document.querySelector("html") as HTMLElement;
 const body = document.querySelector("body") as HTMLElement;
@@ -23,9 +23,6 @@ let getFontSize = html.getAttribute('data-font-size');
 
 let getStorageMode = localStorage.getItem(STORAGE_DARK_MODE)!;
 let getStorageColor = localStorage.getItem(STORAGE_COLOR_THEME)!;
-
-
-
 
 
 
@@ -51,6 +48,9 @@ function selectColorTheme(e) {
     e.currentTarget.classList.add(SELECTED_BUTTON)
 
     changeColorTheme(e, selectedColor)
+
+    localStorage.setItem(STORAGE_COLOR_THEME, selectedColor)!;
+
 }
 
 function changeColorTheme(e, selectedColor) {
@@ -79,6 +79,25 @@ function darkModeStorage() {
     };
 }
 
+function colorThemeStorage() {
+    body.dataset.themeColor = getStorageColor;
+    console.log(getStorageColor)
+    const selectedButton = Array.from(colorButtons).find((item) => {
+        return getStorageColor != "random" && String(item.dataset.themeColor) == String(getStorageColor)
+    })
+
+    colorButtons.forEach((color) => {
+        color.classList.remove(SELECTED_BUTTON)
+    });
+
+    if (selectedButton) {
+        selectedButton?.classList.add(SELECTED_BUTTON)
+
+    } else {
+        setRandomThemeOnLoad()
+    }
+
+}
 
 function setDarkMode() {
     getStorageMode = localStorage.getItem(STORAGE_DARK_MODE)!;
@@ -116,8 +135,7 @@ function changeFontSize(e, selectedFont) {
 }
 
 
-
 setRandomThemeOnLoad();
 darkModeStorage();
-
+colorThemeStorage();
 

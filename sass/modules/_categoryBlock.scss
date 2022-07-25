@@ -1,6 +1,36 @@
 .categoryBlock {
     $this: &;
 
+    &:before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        left: 0;
+        bottom: 0px;
+        height: 100px;
+        background: linear-gradient(transparent, var(--blockBg) 80%);
+        z-index: 1;
+        opacity: 0;
+        pointer-events: none;
+        visibility: hidden;
+
+        @include tablet {
+            display: none;
+        }
+    }
+
+    &.fadeBottom {
+        display: flex;
+        justify-content: center;
+
+        &:before {
+            opacity: 1;
+            visibility: visible;
+        }
+
+
+    }
+
     .block__content {
         display: flex;
         flex-direction: column;

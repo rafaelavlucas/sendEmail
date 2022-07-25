@@ -178,67 +178,32 @@ function scrollToItem(currentAccordion) {
    }, 200);
 }
 
+const useDelay = () => async (ms?: number) =>
+   await new Promise((resolve) => setTimeout(resolve, ms));
+
 function cenas() {
    let sumHeight = 0;
+   const isDesktop = window.innerWidth > tablet;
+   const delay = useDelay();
+   const isAccordionsOpen = [...accordions].find(item => item.classList.contains("open"))
+   if (!isAccordionsOpen) return
 
-   accordions.forEach((item, index) => {
-      item.addEventListener("transitionend", () => {
+   accordions.forEach(async (item) => {
+      const accordionList = item.querySelector('.accordion__list') as HTMLElement;
+      if (item.classList.contains("open")) {
+         await delay(450);
+         accordionList.style.maxHeight = accordionList.scrollHeight + "px";
+      }
+      if (isDesktop) return;
 
-         const accordionList = item.querySelector('.accordion__list') as HTMLElement;
-
-         if (item.classList.contains("open")) {
-            accordionList.style.maxHeight = accordionList.scrollHeight + "px"
-         }
-
-
-      })
-
-      console.log(index)
+      await delay(450);
       sumHeight += item.scrollHeight;
-      categoryList.style.height = sumHeight + "px"
-
-
-
-
-      // setTimeout(() => {
-      //    sumHeight += item.scrollHeight;
-
-      // }, 500);
-
-      // if (item.classList.contains("open")) {
-      //    if (window.innerWidth > tablet) {
-
-      //       setTimeout(() => {
-      //          list.style.maxHeight = list.scrollHeight + "px"
-      //       }, 450);
-
-      //    } else {
-      //       console.log(sumHeight)
-      //       setTimeout(() => {
-      //          console.log(sumHeight)
-      //          list.style.maxHeight = list.scrollHeight + "px"
-
-
-      //       }, 450);
-
-
-      //       setTimeout(() => {
-      //          categoryList.style.height = sumHeight + "px"
-      //       }, 600);
-
-      //    }
-      // };
+      await delay(450);
+      categoryList.style.height = sumHeight + "px";
    })
-
-   // setTimeout(() => {
-   //    console.log(sumHeight)
-   //    categoryList.style.height = sumHeight + "px"
-
-   // }, 450);
-
-
-
 }
+
+
 
 
 

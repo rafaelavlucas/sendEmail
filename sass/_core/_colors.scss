@@ -44,6 +44,11 @@ $red: #DF6251;
    --inputOutline: #{$neu-03};
    --inputText: #{$neu-07};
    --inputLabel: #{$neu-06};
+   // Contacts
+   --iconClose:#{$neu-07};
+   --contactItem: #{$neu-06};
+   --contactItemHover: #{$neu-08};
+   --contactItemBg: #{$neu-01};
 }
 
 [data-theme-mode="dark"] {
@@ -71,6 +76,11 @@ $red: #DF6251;
    --inputOutline: #{$neu-07};
    --inputText: #{$neu-04};
    --inputLabel: #{$neu-04};
+   // Contacts
+   --iconClose: #{$neu-03};
+   --contactItem: #{$neu-06};
+   --contactItemHover: #{$neu-01};
+   --contactItemBg: #{$neu-08};
 }
 
 // Color Themes

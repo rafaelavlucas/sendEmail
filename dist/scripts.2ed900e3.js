@@ -120,15 +120,37 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 })({"scripts/main.ts":[function(require,module,exports) {
 "use strict";
 
-var blocks = document.querySelector(".blocks");
-var messageBlock = document.querySelector(".messageBlock");
+var tabletWidth = 1023,
+    blocks = document.querySelector(".blocks"),
+    messageBlockContent = document.querySelector(".messageBlock .block__content"),
+    contactsButton = document.querySelector(".contactsBtn"),
+    fontButtons = document.querySelectorAll(".mainNav__font"),
+    closeContactsButton = document.querySelector(".contactsBlock__close");
+var messagePaddingBottom = window.getComputedStyle(messageBlockContent, null).getPropertyValue('padding-bottom').split('px')[0]; // Events
+
+contactsButton.addEventListener("click", setBlocksHeight);
+closeContactsButton.addEventListener("click", setBlocksHeight);
+fontButtons.forEach(function (font) {
+  font.addEventListener("click", setBlocksHeight);
+});
 
 if (window.innerWidth > 1023) {
-  blocks.style.maxHeight = messageBlock.scrollHeight + "px";
+  blocks.style.height = messageBlockContent.scrollHeight + "px";
+}
+
+function setBlocksHeight() {
+  if (window.innerWidth < tabletWidth) return;
+  setTimeout(function () {
+    blocks.style.height = messageBlockContent.scrollHeight + "px";
+  }, 300);
 }
 },{}],"scripts/components/themes.ts":[function(require,module,exports) {
-"use strict"; // Variables
+"use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+// Variables
 var COLOR_THEME_OPTIONS = ["gra-01", "gra-02", "gra-03", "gra-04", "gra-05", "gra-06"],
     SELECTED_BUTTON = "selected",
     DARK_MODE = "dark",
@@ -196,7 +218,6 @@ function darkModeStorage() {
 
 function colorThemeStorage() {
   body.dataset.themeColor = getStorageColor;
-  console.log(getStorageColor);
   var selectedButton = Array.from(colorButtons).find(function (item) {
     return getStorageColor != "random" && String(item.dataset.themeColor) == String(getStorageColor);
   });
@@ -246,18 +267,32 @@ setRandomThemeOnLoad();
 darkModeStorage();
 colorThemeStorage();
 },{}],"scripts/components/forms.ts":[function(require,module,exports) {
-"use strict"; // Variables
+"use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+// Variables
 var ERROR_INPUT = "error",
     FORMS_INPUT_SELECTOR = ".forms__input",
     FORMS_MESSAGE_SELECTOR = ".forms__message";
-var inputs = document.querySelectorAll(FORMS_INPUT_SELECTOR); // Events
+var btnSend = document.querySelector(".forms__buttonSend"),
+    inputs = document.querySelectorAll(FORMS_INPUT_SELECTOR),
+    requiredInputs = document.querySelectorAll(".forms__input.required"),
+    inputName = document.querySelector(".forms__input--name input"),
+    inputEmail = document.querySelector(".forms__input--email input"),
+    inputTextArea = document.querySelector(".forms__input--textArea textarea"); // Events
 
 inputs.forEach(function (input) {
   var _a;
 
   (_a = input.querySelector('input')) === null || _a === void 0 ? void 0 : _a.addEventListener("blur", checkFilledInput);
-}); // Functions 
+});
+requiredInputs.forEach(function (input) {
+  input.addEventListener("keyup", hideError);
+  input.addEventListener("click", hideError);
+});
+btnSend.addEventListener("click", sendEmail); // Functions 
 
 function checkFilledInput(_ref) {
   var target = _ref.target,
@@ -266,9 +301,9 @@ function checkFilledInput(_ref) {
   var inputParent = currentTarget.closest(FORMS_INPUT_SELECTOR),
       inputMessage = inputParent.querySelector(FORMS_MESSAGE_SELECTOR);
 
-  if (inputValue) {
+  if (inputValue && inputMessage) {
     validateInputText(inputValue, target);
-  } else {
+  } else if (inputMessage) {
     inputParent.classList.remove(ERROR_INPUT);
     inputMessage.innerHTML = "";
   }
@@ -281,13 +316,80 @@ function validateInputText(inputValue, target) {
       errorMessage = inputParent.dataset.error;
   if (inputParent.dataset.validate == "undefined") return;
 
-  if (inputValue.match(validationRegex)) {
+  if (inputValue.match(validationRegex) && inputMessage) {
     inputParent.classList.remove(ERROR_INPUT);
     inputMessage.innerHTML = "";
   } else {
     inputParent.classList.add(ERROR_INPUT);
     inputMessage.innerHTML = errorMessage;
   }
+} // function checkInputValue(input) {
+//     return !input;
+// }
+// function checkCheckbox(input) {
+//     return !input.checked;
+// }
+
+
+function error(el) {
+  el.classList.add("error");
+  el.querySelector(FORMS_MESSAGE_SELECTOR).innerText = el.dataset.required;
+}
+
+function hideError(e) {
+  // if (e.currentTarget.querySelector('input')?.value == "" || e.currentTarget.querySelector('textarea')?.value == "") return;
+  e.currentTarget.classList.remove("error");
+}
+
+function validateForm() {
+  var isValid = true;
+  requiredInputs.forEach(function (input) {
+    var inputField = input.querySelector('input'),
+        textAreaField = input.querySelector('textarea'),
+        checkboxField = input.querySelector('#checkbox');
+
+    if ((inputField === null || inputField === void 0 ? void 0 : inputField.value) == "" || (textAreaField === null || textAreaField === void 0 ? void 0 : textAreaField.value) == "" || (checkboxField === null || checkboxField === void 0 ? void 0 : checkboxField.checked) == false) {
+      isValid = false;
+      error(input);
+      console.log("cenas2");
+      return isValid;
+    }
+  });
+  return isValid;
+}
+
+function sendEmail() {
+  if (!validateForm()) return; // Change all values to your own
+
+  var params = {
+    user_id: 'P1UL7nDGfY25g6qyU',
+    service_id: 'service_8ee5gmd',
+    template_id: 'template_ope8bod',
+    template_params: {
+      'from_name': inputName.value,
+      'from_email': inputEmail.value,
+      'message': inputTextArea.value
+    }
+  };
+  var headers = {
+    'Content-type': 'application/json'
+  };
+  var options = {
+    method: 'POST',
+    headers: headers,
+    body: JSON.stringify(params)
+  };
+  fetch('https://api.emailjs.com/api/v1.0/email/send', options).then(function (httpResponse) {
+    if (httpResponse.ok) {
+      console.log('Success');
+    } else {
+      return httpResponse.text().then(function (text) {
+        return Promise.reject(text);
+      });
+    }
+  }).catch(function (error) {
+    console.log('Oops... ' + error);
+  });
 }
 },{}],"scripts/components/accordion.ts":[function(require,module,exports) {
 "use strict";
@@ -370,7 +472,33 @@ getCategories();
 var categoryListHeight = categoryList.scrollHeight;
 accordionButton = document.querySelectorAll(".accordion__button");
 var accordions = document.querySelectorAll(".accordion");
-var accordionLists = document.querySelectorAll(".accordion__list"); // Events
+var accordionLists = document.querySelectorAll(".accordion__list");
+
+var useDelay = function useDelay() {
+  return function (ms) {
+    return __awaiter(void 0, void 0, void 0, /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+      return _regeneratorRuntime().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return new Promise(function (resolve) {
+                return setTimeout(resolve, ms);
+              });
+
+            case 2:
+              return _context.abrupt("return", _context.sent);
+
+            case 3:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+  };
+}; // Events
+
 
 accordionButton.forEach(function (button) {
   button.addEventListener("click", openAccordion);
@@ -378,7 +506,7 @@ accordionButton.forEach(function (button) {
 categoryBlockContent.addEventListener("scroll", addFadeOnScroll);
 expandButton.addEventListener("click", expandListOnMobile);
 changeFontBtn.forEach(function (font) {
-  font.addEventListener("click", cenas);
+  font.addEventListener("click", updateAccordionHeight);
 }); // Functions
 
 function getCategories() {
@@ -399,7 +527,6 @@ function openAccordion(e) {
   if (currentAccordion.classList.contains(OPEN_ACCORDION)) {
     currentAccordion.classList.remove(OPEN_ACCORDION);
     currentList.style.maxHeight = "0";
-    categoryBlock.style.height = "auto";
     scrollToItem(currentAccordion);
 
     if (window.innerWidth < tablet) {
@@ -461,32 +588,7 @@ function scrollToItem(currentAccordion) {
   }, 200);
 }
 
-var useDelay = function useDelay() {
-  return function (ms) {
-    return __awaiter(void 0, void 0, void 0, /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-      return _regeneratorRuntime().wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              _context.next = 2;
-              return new Promise(function (resolve) {
-                return setTimeout(resolve, ms);
-              });
-
-            case 2:
-              return _context.abrupt("return", _context.sent);
-
-            case 3:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee);
-    }));
-  };
-};
-
-function cenas() {
+function updateAccordionHeight() {
   var _this = this;
 
   var sumHeight = 0;
@@ -494,7 +596,7 @@ function cenas() {
   var delay = useDelay();
 
   var isAccordionsOpen = _toConsumableArray(accordions).find(function (item) {
-    return item.classList.contains("open");
+    return item.classList.contains(OPEN_ACCORDION);
   });
 
   if (!isAccordionsOpen) return;
@@ -507,7 +609,7 @@ function cenas() {
             case 0:
               accordionList = item.querySelector('.accordion__list');
 
-              if (!item.classList.contains("open")) {
+              if (!item.classList.contains(OPEN_ACCORDION)) {
                 _context2.next = 5;
                 break;
               }
@@ -563,6 +665,12 @@ closeSettingsBtn.addEventListener("click", closeSettingsMobile);
 
 window.onscroll = function () {
   stickyNav();
+};
+
+window.onresize = function () {
+  setTimeout(function () {
+    location.reload();
+  }, 800);
 }; // Functions
 
 
@@ -581,36 +689,176 @@ function stickyNav() {
     mainNav.classList.remove(STICKY_NAV);
   }
 }
+},{}],"scripts/modules/categoryBlock.ts":[function(require,module,exports) {
+"use strict"; // Variables
+
+var SELECTED_MESSAGE = "selected",
+    SHOW_FORM_ERROR = "error";
+var messageItem = document.querySelectorAll(".accordion__listItem"),
+    textArea = document.querySelector(".forms__input--textArea textarea"); // Events
+
+messageItem.forEach(function (message) {
+  message.addEventListener("click", selectMessage);
+}); // Functions
+
+function selectMessage(e) {
+  var _a;
+
+  var selectedMessage = e.currentTarget,
+      isSelected = selectedMessage.classList.contains(SELECTED_MESSAGE),
+      messageText = selectedMessage.innerText;
+  messageItem.forEach(function (message) {
+    message.classList.remove(SELECTED_MESSAGE);
+  });
+
+  if (isSelected) {
+    selectedMessage.classList.remove(SELECTED_MESSAGE);
+    textArea.value = "";
+  } else {
+    e.currentTarget.classList.add(SELECTED_MESSAGE);
+    textArea.value = messageText;
+    (_a = textArea.parentElement) === null || _a === void 0 ? void 0 : _a.classList.remove(SHOW_FORM_ERROR);
+  }
+} // function blabla() {
+//     const request = new Request(`https://zenquotes.io/api/quotes`, {
+//         method: 'GET',
+//     });
+//     fetch(request)
+//         .then(function (response) {
+//             return response.json();
+//         })
+//         .then(function (result) {
+//             console.log(result)
+//             // const item = result.Search;
+//             // let movies = document.querySelector('.movies');
+//             // if (item) {
+//             //     item.forEach(el => {
+//             //         let title = el.Title,
+//             //             poster = el.Poster != "N/A" ? el.Poster : "assets/defaultimg.svg",
+//             //             year = el.Year,
+//             //             link = el.imdbID,
+//             //             type = el.Type;
+//             //         const template = `
+//             //     <a class="item" data-type="${type}" href="https://imdb.com/title/${link}" target="_blank">
+//             //     <article class="item__content">
+//             //     <div class="item__text">
+//             //     <small class="item__year">${year}</small>
+//             //     <p  class="item__title">${title}</p>
+//             //     </div>
+//             //     <button class="item__view">view info</button>
+//             //     </article>
+//             //     <div class="item__image"><img src="${poster}"></div>
+//             //     </a>`;
+//         })
+// }
+// blabla()
 },{}],"scripts/modules/contactsBlock.ts":[function(require,module,exports) {
 "use strict";
 
-var SHOW_CONTACTS_BLOCK = "show";
-var tabletWidth = 1023,
-    contactsBlock = document.querySelector(".contactsBlock"),
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+var contacts = [{
+  name: "Rafaela Lucas",
+  email: "rafaela.lucas@globalservs.com"
+}, {
+  name: "João Bairrada",
+  email: "bairrada@globalservs.com"
+}, {
+  name: "cenas",
+  email: "cenas@globalservs.com"
+}];
+var SHOW_CONTACTS_BLOCK = "show",
+    HIDE_CONTACT = "hide",
+    SELECTED_CONTACT = "selected",
+    SHOW_NO_RESULTS = "show";
+var contactsBlock = document.querySelector(".contactsBlock"),
+    contactsList = document.querySelector(".contactsBlock__list"),
     contactsBtn = document.querySelector(".contactsBtn"),
     closeContactsBtn = document.querySelector(".contactsBlock__close"),
-    allBlocks = document.querySelector(".blocks"),
-    messageBlock = document.querySelector(".messageBlock"),
-    messageBlockContent = document.querySelector(".messageBlock .block__content");
-var messagePaddingBottom = window.getComputedStyle(messageBlockContent, null).getPropertyValue('padding-bottom').split('px')[0]; // Events
+    emailInput = document.querySelector(".forms__input--email input"),
+    searchInput = document.querySelector(".forms__input--search input"),
+    noResults = document.querySelector(".contactsBlock__noResults");
+var selectedEmails = []; // Variable after Loading the Contacts Template
+
+getContacts();
+var contactItem = document.querySelectorAll(".contactsBlock__contact"); // Events
 
 contactsBtn.addEventListener("click", showContactsBlock);
-closeContactsBtn.addEventListener("click", hideContactsBlock); // Functions
-
-function setBlocksHeight() {
-  if (window.innerWidth < tabletWidth) return;
-  setTimeout(function () {
-    allBlocks.style.maxHeight = messageBlock.scrollHeight + Number(messagePaddingBottom) + "px";
-  }, 200);
-}
+closeContactsBtn.addEventListener("click", hideContactsBlock);
+contactItem.forEach(function (contact) {
+  contact.addEventListener("click", selectContact);
+});
+emailInput.addEventListener("blur", checkEmailInputValue);
+searchInput.addEventListener("input", handleSearch); // Functions
 
 function showContactsBlock() {
   contactsBlock.classList.add(SHOW_CONTACTS_BLOCK);
-  setBlocksHeight();
 }
 
 function hideContactsBlock() {
   contactsBlock.classList.remove(SHOW_CONTACTS_BLOCK);
+  searchInput.value = "";
+  contactItem.forEach(function (contact) {
+    contact.classList.remove(HIDE_CONTACT);
+  });
+  noResults.classList.remove(SHOW_NO_RESULTS);
+}
+
+function getContacts() {
+  contacts.forEach(function (item) {
+    var templateContacts = "\n        <li class=\"contactsBlock__listItem\">\n            <button class=\"contactsBlock__contact\" data-email=\"".concat(item.email, "\">").concat(item.name, "</button>\n        </li>");
+    contactsList.insertAdjacentHTML("beforeend", templateContacts);
+  });
+}
+
+function selectContact(e) {
+  var isSelected = e.currentTarget.classList.contains(SELECTED_CONTACT);
+  contactItem.forEach(function (contact) {
+    contact.classList.remove(SELECTED_CONTACT);
+  });
+
+  if (isSelected) {
+    e.currentTarget.classList.remove(SELECTED_CONTACT);
+    emailInput.value = "";
+  } else {
+    e.currentTarget.classList.add(SELECTED_CONTACT);
+    emailInput.value = e.currentTarget.dataset.email;
+  }
+}
+
+function checkEmailInputValue() {
+  if (emailInput.value == "") {
+    contactItem.forEach(function (contact) {
+      contact.classList.remove(SELECTED_CONTACT);
+    });
+  }
+}
+
+function handleSearch(e) {
+  var value = e.currentTarget.value.toLowerCase();
+
+  var filteredContacts = _toConsumableArray(contactItem).filter(function (contact) {
+    return contact.innerText.toLowerCase().includes(value);
+  });
+
+  contactItem.forEach(function (contact) {
+    contact.classList.add(HIDE_CONTACT);
+    noResults.classList.add(SHOW_NO_RESULTS);
+  });
+  filteredContacts.forEach(function (contact) {
+    contact.classList.remove(HIDE_CONTACT);
+    noResults.classList.remove(SHOW_NO_RESULTS);
+  });
 }
 },{}],"scripts/index.ts":[function(require,module,exports) {
 "use strict";
@@ -625,8 +873,10 @@ require("./components/accordion");
 
 require("./modules/mainNav");
 
+require("./modules/categoryBlock");
+
 require("./modules/contactsBlock");
-},{"./main":"scripts/main.ts","./components/themes":"scripts/components/themes.ts","./components/forms":"scripts/components/forms.ts","./components/accordion":"scripts/components/accordion.ts","./modules/mainNav":"scripts/modules/mainNav.ts","./modules/contactsBlock":"scripts/modules/contactsBlock.ts"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./main":"scripts/main.ts","./components/themes":"scripts/components/themes.ts","./components/forms":"scripts/components/forms.ts","./components/accordion":"scripts/components/accordion.ts","./modules/mainNav":"scripts/modules/mainNav.ts","./modules/categoryBlock":"scripts/modules/categoryBlock.ts","./modules/contactsBlock":"scripts/modules/contactsBlock.ts"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -654,7 +904,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58596" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63551" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -4,10 +4,12 @@
   "description": "JavaScript and TypeScript example starter project",
   "main": "index.html",
   "scripts": {
-    "start": "parcel index.html --open",
+    "dev": "parcel index.html --open",
     "build": "parcel build index.html"
   },
   "dependencies": {
+    "@sendgrid/mail": "^7.7.0",
+    "node-mailjet": "^5.1.1",
     "parcel-bundler": "^1.6.1"
   },
   "devDependencies": {

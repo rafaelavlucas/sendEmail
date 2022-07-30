@@ -38,6 +38,8 @@
 }
 
 .blocks {
+   min-height: fit-content;
+   height: auto;
    grid-column: 2/12;
    display: flex;
    justify-content: center;

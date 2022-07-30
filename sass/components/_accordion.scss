@@ -109,8 +109,15 @@
 
       &:hover {
          color: var(--accordionTextHover);
+
+      }
+
+      &.selected {
+         color: var(--accordionTextHover);
          background: var(--accordionBgHover);
       }
+
+
    }
 
    &.open {

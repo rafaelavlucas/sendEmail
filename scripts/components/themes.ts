@@ -1,3 +1,5 @@
+import { BlockList } from "net";
+
 // Variables
 const
     COLOR_THEME_OPTIONS = ["gra-01", "gra-02", "gra-03", "gra-04", "gra-05", "gra-06"],
@@ -81,7 +83,7 @@ function darkModeStorage() {
 
 function colorThemeStorage() {
     body.dataset.themeColor = getStorageColor;
-    console.log(getStorageColor)
+
     const selectedButton = Array.from(colorButtons).find((item) => {
         return getStorageColor != "random" && String(item.dataset.themeColor) == String(getStorageColor)
     })

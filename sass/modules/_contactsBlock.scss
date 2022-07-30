@@ -2,7 +2,7 @@
     // display: none;
     opacity: 0;
     visibility: hidden;
-    transition: transform 0.4s 0.1s ease, width 0.3s ease, opacity 0.3s 0.2s ease;
+    transition: transform 0.4s ease, width 0.4s ease, opacity 0.2s ease;
     transform: translateX(-150%);
     z-index: -1;
     width: 0;
@@ -21,16 +21,17 @@
     }
 
     &.show {
-        // display: flex;
         width: calc(100% - 24px);
         opacity: 1;
         visibility: visible;
         transform: translateX(0%);
-
-
         right: 0;
+        z-index: 1;
+        transition: transform 0.4s ease, width 0.3s ease, opacity 0.3s 0.2s ease, z-index 0s 0.4s;
 
-
+        @include tablet {
+            transition: all 0.4s ease;
+        }
     }
 
     &__close {
@@ -40,5 +41,77 @@
         right: 24px;
         cursor: pointer;
         z-index: 1;
+        color: var(--iconClose);
+    }
+
+    &__list {
+        margin-top: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    &__listItem {}
+
+    &__contact,
+    &__noResults {
+        @include bodyFont($font14, $regular);
+        position: relative;
+        width: 100%;
+        height: 40px;
+        padding: 0 16px;
+        display: flex;
+        align-items: center;
+        border-radius: 8px;
+        color: var(--contactItem);
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transition: all 0.3s ease;
+            left: 0;
+            top: 0;
+            border-radius: inherit;
+            z-index: -1;
+            background: var(--accentColor);
+            opacity: 0;
+        }
+
+        &:hover {
+            color: var(--contactItemHover);
+            background: var(--contactItemBg);
+
+        }
+
+        &.selected {
+            color: $neu-01;
+
+            &:hover {
+                background: transparent;
+            }
+
+            &:before {
+                opacity: 1;
+            }
+        }
+
+        &.hide {
+            display: none;
+        }
+
+        &.show {
+            display: flex;
+        }
+    }
+
+    &__noResults {
+        @include accentFont($font16, $semibold);
+        pointer-events: none;
+        cursor: default;
+        display: none;
     }
 }

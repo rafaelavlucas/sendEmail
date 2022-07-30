@@ -13,6 +13,7 @@
         opacity: 0;
         pointer-events: none;
         visibility: hidden;
+        transition: opacity 0.3s ease;
 
         @include tablet {
             display: none;
@@ -27,8 +28,6 @@
             opacity: 1;
             visibility: visible;
         }
-
-
     }
 
     .block__content {
@@ -76,7 +75,6 @@
                 pointer-events: all;
                 transition: all 0.3s ease;
                 margin-bottom: 16px;
-                // overflow: initial;
             }
 
             &__expandBtn {

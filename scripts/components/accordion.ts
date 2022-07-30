@@ -62,6 +62,9 @@ accordionButton = document.querySelectorAll(".accordion__button");
 const accordions = document.querySelectorAll(".accordion") as NodeListOf<HTMLElement>;
 const accordionLists = document.querySelectorAll(".accordion__list") as NodeListOf<HTMLElement>;
 
+const useDelay = () => async (ms?: number) =>
+   await new Promise((resolve) => setTimeout(resolve, ms));
+
 
 // Events
 accordionButton.forEach((button) => {
@@ -73,8 +76,10 @@ categoryBlockContent.addEventListener("scroll", addFadeOnScroll)
 expandButton.addEventListener("click", expandListOnMobile)
 
 changeFontBtn.forEach((font) => {
-   font.addEventListener("click", cenas);
+   font.addEventListener("click", updateAccordionHeight);
 });
+
+
 
 
 // Functions
@@ -108,7 +113,6 @@ function openAccordion(e) {
    if (currentAccordion.classList.contains(OPEN_ACCORDION)) {
       currentAccordion.classList.remove(OPEN_ACCORDION);
       currentList.style.maxHeight = "0";
-      categoryBlock.style.height = "auto";
 
       scrollToItem(currentAccordion)
 
@@ -178,19 +182,16 @@ function scrollToItem(currentAccordion) {
    }, 200);
 }
 
-const useDelay = () => async (ms?: number) =>
-   await new Promise((resolve) => setTimeout(resolve, ms));
-
-function cenas() {
+function updateAccordionHeight() {
    let sumHeight = 0;
    const isDesktop = window.innerWidth > tablet;
    const delay = useDelay();
-   const isAccordionsOpen = [...accordions].find(item => item.classList.contains("open"))
+   const isAccordionsOpen = [...accordions].find(item => item.classList.contains(OPEN_ACCORDION))
    if (!isAccordionsOpen) return
 
    accordions.forEach(async (item) => {
       const accordionList = item.querySelector('.accordion__list') as HTMLElement;
-      if (item.classList.contains("open")) {
+      if (item.classList.contains(OPEN_ACCORDION)) {
          await delay(450);
          accordionList.style.maxHeight = accordionList.scrollHeight + "px";
       }

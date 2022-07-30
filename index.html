@@ -87,30 +87,32 @@
                                     e
                                     escreve qualquer coisa! </h6>
                             </header>
-                            <form class="forms" action="">
-                                <div class="forms__input">
+                            <form class="forms">
+                                <div class="forms__input forms__input--name">
                                     <input type="text" placeholder="De">
                                 </div>
-                                <div class="forms__input forms__input--inputIcon"
+                                <div class="forms__input forms__input--email required"
+                                    data-required="Por favor preenche o campo."
                                     data-error="Por favor utilize um email válido."
                                     data-validate="^(([a-zA-Z0-9_\-\.]+)@(([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,6}|[0-9]{1,3}))$">
-                                    <input type="email" placeholder="Para">
+                                    <input type="email" placeholder="Para *">
                                     <span class="button icon contactsBtn"><i class="icon-user"></i></span>
                                     <p class="forms__message"></p>
                                 </div>
-                                <div class="forms__input forms__input--textArea">
-                                    <textarea name="" id="" cols="30" rows="10" placeholder="Mensagem"></textarea>
+                                <div class="forms__input forms__input--textArea required"
+                                    data-required="Por favor preenche o campo.">
+                                    <textarea name="" id="" cols="30" rows="10" placeholder="Mensagem *"></textarea>
                                     <p class="forms__message"></p>
                                 </div>
-                                <div class="forms__input forms__input--checkbox">
+                                <div class="forms__input forms__input--checkbox required">
                                     <input id="checkbox" type="checkbox">
                                     <label for="checkbox">Aceito as consequências que possam surgir no seguimento do
                                         envio
                                         desta
-                                        mensagem.</label>
+                                        mensagem. *</label>
                                 </div>
 
-                                <button class="button forms__buttonSend">Enviar</button>
+                                <a class="button forms__buttonSend">Enviar</a>
 
                             </form>
                         </div>
@@ -124,7 +126,14 @@
                                 <h6 class="header__subtitle">Faz scroll e escolhe alguém alteatório ou pesquisa pela
                                     pessoa que mais queres que receba esta mensagem!</h6>
                             </header>
-
+                            <form class="forms">
+                                <div class="forms__input forms__input--search">
+                                    <input type="text" placeholder="Procurar">
+                                </div>
+                            </form>
+                            <ul class="contactsBlock__list">
+                                <li class="contactsBlock__noResults">Sem resultados</li>
+                            </ul>
                         </div>
                     </section>
                 </div>

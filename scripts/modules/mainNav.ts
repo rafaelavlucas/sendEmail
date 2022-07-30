@@ -15,7 +15,12 @@ let mainNavTop = mainNav.offsetTop;
 openSettingsBtn.addEventListener("click", openSettingsMobile)
 closeSettingsBtn.addEventListener("click", closeSettingsMobile)
 
-window.onscroll = function () { stickyNav() };
+window.onscroll = () => { stickyNav() }
+window.onresize = () => {
+    setTimeout(() => {
+        location.reload()
+    }, 800);
+}
 
 // Functions
 function openSettingsMobile() {

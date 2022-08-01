@@ -1,9 +1,22 @@
-$gra-01: linear-gradient(90deg, #c64230 1.06%, #ea6b23 100%);
-$gra-02: linear-gradient(90deg, #e88b00 1.06%, #ecaa00 100%);
-$gra-03: linear-gradient(90deg, #5fa01d 1.06%, #94c22f 100%);
-$gra-04: linear-gradient(90deg, #209478 1.06%, #3acb97 100%);
-$gra-05: linear-gradient(90deg, #1c88ab 1.06%, #2dbcc6 100%);
-$gra-06: linear-gradient(90deg, #7c52a6 1.06%, #a671da 100%);
+$m-01:#c64230;
+$m-01--light: #ea6b23;
+$m-02:#e88b00;
+$m-02--light: #ecaa00;
+$m-03:#5fa01d;
+$m-03--light: #94c22f;
+$m-04:#209478;
+$m-04--light: #3acb97;
+$m-05:#1c88ab;
+$m-05--light: #2dbcc6;
+$m-06:#7c52a6;
+$m-06--light: #7c52a6;
+
+$gra-01: linear-gradient(90deg, $m-01 1.06%, $m-01--light 100%);
+$gra-02: linear-gradient(90deg, $m-02 1.06%, $m-02--light 100%);
+$gra-03: linear-gradient(90deg, $m-03 1.06%, $m-03--light 100%);
+$gra-04: linear-gradient(90deg, $m-04 1.06%, $m-04--light 100%);
+$gra-05: linear-gradient(90deg, $m-05 1.06%, $m-05--light 100%);
+$gra-06: linear-gradient(90deg, $m-06 1.06%, $m-06--light 100%);
 
 $neu-01: #ffffff;
 $neu-02: #f5f5f5;
@@ -49,6 +62,12 @@ $red: #DF6251;
    --contactItem: #{$neu-06};
    --contactItemHover: #{$neu-08};
    --contactItemBg: #{$neu-01};
+
+   .logo {
+      path:first-child {
+         fill: $neu-09
+      }
+   }
 }
 
 [data-theme-mode="dark"] {
@@ -81,29 +100,83 @@ $red: #DF6251;
    --contactItem: #{$neu-06};
    --contactItemHover: #{$neu-01};
    --contactItemBg: #{$neu-08};
+
+   .logo {
+      path:first-child {
+         fill: $neu-04
+      }
+   }
 }
 
 // Color Themes
 [data-theme-color="gra-01"] {
    --accentColor: #{$gra-01};
+
+   .color1 {
+      stop-color: $m-01;
+   }
+
+   .color2 {
+      stop-color: $m-01--light;
+   }
 }
 
 [data-theme-color="gra-02"] {
    --accentColor: #{$gra-02};
+
+   .color1 {
+      stop-color: $m-02;
+   }
+
+   .color2 {
+      stop-color: $m-02--light;
+   }
 }
 
 [data-theme-color="gra-03"] {
    --accentColor: #{$gra-03};
+
+   .color1 {
+      stop-color: $m-03;
+   }
+
+   .color2 {
+      stop-color: $m-03--light;
+   }
 }
 
 [data-theme-color="gra-04"] {
    --accentColor: #{$gra-04};
+
+   .color1 {
+      stop-color: $m-04;
+   }
+
+   .color2 {
+      stop-color: $m-04--light;
+   }
 }
 
 [data-theme-color="gra-05"] {
    --accentColor: #{$gra-05};
+
+   .color1 {
+      stop-color: $m-05;
+   }
+
+   .color2 {
+      stop-color: $m-05--light;
+   }
 }
 
 [data-theme-color="gra-06"] {
    --accentColor: #{$gra-06};
+
+   .color1 {
+      stop-color: $m-06;
+   }
+
+   .color2 {
+      stop-color: $m-06--light;
+   }
 }

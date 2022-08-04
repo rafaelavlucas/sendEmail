@@ -1,11 +1,15 @@
 // Variables
 const
     SELECTED_MESSAGE = "selected",
-    SHOW_FORM_ERROR = "error";
+    SHOW_FORM_ERROR = "error",
+    SHOW_NOTIFICATION = "show",
+    HIDE_NOTIFICATION = "hide";
+
 
 const
     messageItem = document.querySelectorAll(".accordion__listItem") as NodeListOf<HTMLElement>,
-    textArea = document.querySelector(".forms__input--textArea textarea") as HTMLInputElement;
+    textArea = document.querySelector(".forms__input--textArea textarea") as HTMLInputElement,
+    notificationBar = document.querySelector(".notificationBar") as HTMLElement;
 
 // Events
 messageItem.forEach(message => {
@@ -25,12 +29,24 @@ function selectMessage(e) {
 
     if (isSelected) {
         selectedMessage.classList.remove(SELECTED_MESSAGE)
+        notificationBar.classList.remove(SHOW_NOTIFICATION)
         textArea.value = ""
 
     } else {
         e.currentTarget.classList.add(SELECTED_MESSAGE)
+
         textArea.value = messageText
         textArea.parentElement?.classList.remove(SHOW_FORM_ERROR)
+        notificationBar.classList.add(SHOW_NOTIFICATION)
+
+        setTimeout(() => {
+            notificationBar.classList.add(HIDE_NOTIFICATION)
+        }, 2500);
+        setTimeout(() => {
+            notificationBar.classList.remove(HIDE_NOTIFICATION)
+            notificationBar.classList.remove(SHOW_NOTIFICATION)
+        }, 2800);
+
     }
 }
 

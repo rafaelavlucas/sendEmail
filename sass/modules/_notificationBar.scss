@@ -1,0 +1,40 @@
+.notificationBar {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: var(--notificationBg);
+    padding: 24px 0;
+    bottom: -20%;
+    transition: bottom 0.3s ease;
+    box-shadow: $sha-01;
+
+    .wrapper {
+        display: flex;
+        gap: 24px;
+        align-items: center;
+    }
+     
+
+
+    &__text {
+        @include bodyFont($font14, $regular);
+        color:  var(--notificationText);
+    }
+
+    &__icon {
+        @include icon24;
+        color:  var(--iconClose);
+        cursor: pointer;
+    
+    }
+
+    &.show {
+        bottom:0;
+        transition: bottom 0.3s ease;
+    }
+    &.hide {
+        bottom:-20%;
+        transition: bottom 0.6s ease;
+    }
+    
+}

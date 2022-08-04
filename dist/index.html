@@ -14,7 +14,7 @@
         <nav class="mainNav">
             <div class="wrapper">
                 <div class="mainNav__content">
-                    <svg class="logo" width="140" viewBox="0 0 107 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="mainNav__logo" width="140" viewBox="0 0 107 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M80.5 1.66893e-06L75 16L89 16L83.5 0L80.5 1.66893e-06ZM82 4L84.9999 13H79L82 4ZM37 16H28L28 2.38419e-06L31 2.14577e-06L31 13L37 13V16ZM10 2.38419e-06H0V16H3V10H8V7H3V3H10V2.38419e-06ZM40 16H49V13L43 13V2.14577e-06L40 2.38419e-06V16ZM92 16V2.38419e-06H95V16H92ZM107 16H98V2.38419e-06L101 2.14577e-06V13L107 13V16ZM16 2.38419e-06H13V10C13 13.3137 15.6863 16 19 16C22.3137 16 25 13.3137 25 10V2.38419e-06H22V3V6V10C22 11.6569 20.6569 13 19 13C17.3431 13 16 11.6569 16 10V6V3V2.38419e-06ZM62 6L72 2.38419e-06H52L62 6Z" fill="#313131"></path>
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M62 9L52 3V16H72V3L62 9Z" fill="url(#gradient)"></path>
                         <defs>
@@ -115,33 +115,42 @@
                                         desta
                                         mensagem. *</label>
                                 </div>
-
                                 <a class="button forms__buttonSend">Enviar</a>
-
                             </form>
                         </div>
                     </section>
-
+ 
                     <section class="block contactsBlock">
                         <div class="block__content">
-                            <button class="contactsBlock__close"><i class="icon-x"></i></button>
-                            <header class="header">
-                                <h2 class="header__title">Contactos</h2>
-                                <h6 class="header__subtitle">Faz scroll e escolhe alguém alteatório ou pesquisa pela
-                                    pessoa que mais queres que receba esta mensagem!</h6>
-                            </header>
-                            <form class="forms">
-                                <div class="forms__input forms__input--search">
-                                    <input type="text" placeholder="Procurar">
-                                </div>
-                            </form>
-                            <ul class="contactsBlock__list">
+
+                            <div class="contactsBlock__heading">
+                                <button class="contactsBlock__close"><i class="icon-x"></i></button>
+                                <header class="header">
+                                    <h2 class="header__title">Contactos</h2>
+                                    <h6 class="header__subtitle">Faz scroll e escolhe alguém alteatório ou pesquisa pela
+                                        pessoa que mais queres que receba esta mensagem!</h6>
+                                </header>
+                                <form class="forms">
+                                    <div class="forms__input forms__input--search">
+                                        <input type="text" placeholder="Procurar">
+                                    </div>
+                                </form>
+                            </div>
+                                <ul class="contactsBlock__list">
                                 <li class="contactsBlock__noResults">Sem resultados</li>
                             </ul>
-                        </div>
+                        </div> 
                     </section>
                 </div>
             </div>
+        </section>
+
+        <section class="notificationBar">
+           <div class="wrapper">
+            <i class="icon-check notificationBar__icon "></i>
+            <p class="notificationBar__text">Mensagem inserida com sucesso!</p>
+   
+           </div>
         </section>
 
         <!-- <script src="scripts/components/accordion.ts"></script> -->

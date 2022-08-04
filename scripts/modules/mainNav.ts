@@ -16,11 +16,7 @@ openSettingsBtn.addEventListener("click", openSettingsMobile)
 closeSettingsBtn.addEventListener("click", closeSettingsMobile)
 
 window.onscroll = () => { stickyNav() }
-window.onresize = () => {
-    setTimeout(() => {
-        location.reload()
-    }, 800);
-}
+
 
 // Functions
 function openSettingsMobile() {

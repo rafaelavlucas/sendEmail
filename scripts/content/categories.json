@@ -1,0 +1,62 @@
+
+ 
+[
+   {
+      "category": "Amizade",
+      "messages": [
+         "Em nome da nossa amizade, se tu caires eu ajudo-te a levantar, mas só depois de eu parar de rir.",
+         "Todos temos aquele amigo antibiótico que só responde de 8 em 8 horas",
+         "Há 2 espécies de chatos: os chatos propriamente ditos e os amigos, que são os nossos chatos prediletos.",
+         "Todos temos um amigo idiota... Se não tens nenhum amigo idiota então lamento informar, mas o amigo idiota és tu!",
+         "Queridos amigos, é tão difícil achar um amigo lindo, engraçado, inteligente e humilde. Por isso, não me percam!",
+         "Friends é a série mais mentirosa que existe. Como é possível 6 amigos reunirem-se sempre? Vocês já tentaram marcar de sair com mais de 3 pessoas?"
+      ]
+   },
+   {
+      "category": "Aniversário",
+      "messages": [
+         "Que neste dia todas as alegrias do mundo sejam tuas! Parabéns.",
+         "Desejo-te um dia cheio de momentos agradáveis e alegres!",
+         "Neste teu dia especial, quero aproveitar a oportunidade para te agradecer por tudo o que fizeste por mim. Muitos parabéns!",
+         "Parabéns! Que este seja o melhor aniversário da tua vida!",
+         "Parabéns pelo teu aniversário! Desejo-te um dia verdadeiramente fabuloso.",
+         "Feliz aniversário! Agradeço a tua amizade e todos os bons momentos que passámos juntos este ano."
+      ]
+   },
+   {
+      "category": "Boas festas",
+      "messages": [
+         "Esta mensagem é uma caixinha cheia de alegria, amor e paz, embrulhada com muito carinho, selada com um sorriso e enviada com um beijo. Feliz Natal e um ótimo ano novo!",
+         "Natal é tempo de alegria, paz, felicidade e muito amor. Que possas viver todos esses bons momentos, todos os dias do Ano Novo! Boas Festas!",
+         "Que este Natal seja um momento de harmonia e paz, que te faça acreditar num Ano Novo cheio de felicidades e conquistas. Boas Festas!",
+         "Querido amigo, desejo-te um Feliz Natal e um Ano Novo cheio de paz, saúde e prosperidade!",
+         "Que o Pai Natal te traga os principais presentes: Alegria todos os dias, sonhos realizados, queridos amigos, prosperidade, paz e harmonia, muito amor e uma vida repleta de felicidades. Boas Festas!",
+         "O mundo está nas tuas mãos. Que tenhas a coragem e a determinação para transformar momentos difíceis em grandes desafios, sempre rumo a dias melhores. Que este Natal seja pleno em felicidade e amor. Feliz Natal e um próspero Ano Novo!",
+         "Que as alegrias e sorrisos deste Natal perdurem durante todo o ano que se inicia. Boas Festas!"
+
+      ]
+   },
+    {
+       "category": "Mendes morning inspo",
+       "messages": [
+         `"Ter problemas na vida é inevitável. Ser derrotado por eles é opcional, uma atitude vitoriosa e positiva é meio caminho andado para o sucesso."`,
+          `"O talento vence jogos, mas só o trabalho em equipe vence campeonatos."`,
+          `"O sonho é um esboço... motivação a estrutura... a persistência é a realidade."`,
+          `" Não é a distância que nos separa, é a vontade que nos une!" `,
+          `"Por detras do sucesso existe sempre uma grande equipa."`,
+          `"A verdadeira motivação vem da realização nas dificuldades da vida."`,
+          `"Inspiração vem do mundo e de outras grandes pessoas. Mas a motivação vem de dentro de nós."`
+       ]    },
+    
+    {
+       "category": "Sucesso Profissional",
+       "messages": [
+          "Muitos parabéns! Sei que vai ser mais um desafio ultrapassado, mas, mesmo assim, não posso deixar de te desejar muitas felicidades e muito sucesso! ",
+          "É uma grande alegria ver pessoas que se esforçam, como tu, serem recompensadas por todo o seu esforço! Muitos parabéns!",
+          "Era só uma questão de tempo até veres o teu talento reconhecido. Parabéns! Well done! Muito sucesso!",
+          "Grande desafio! Só para os bons, mesmo! Muita sorte e muitas felicidades no novo desafio! Vais superar as expectativas, já sei!",
+          "Parabéns pela promoção! Muito merecida e já vem tarde! Sei que vais estar à altura do desafio! Break a leg!!"
+       ]
+    }
+ ]
+ 

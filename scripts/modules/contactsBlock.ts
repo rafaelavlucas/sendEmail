@@ -1,23 +1,4 @@
-interface ContactsInterface {
-    name: string;
-    email: string;
-}
-
-const contacts: ContactsInterface[] = [
-    {
-        name: "Rafaela Lucas",
-        email: "rafaela.lucas@globalservs.com"
-    },
-    {
-        name: "João Bairrada",
-        email: "bairrada@globalservs.com"
-    },
-    {
-        name: "cenas",
-        email: "cenas@globalservs.com"
-    },
-
-];
+import contacts from "../content/contacts.json"
 
 const
     SHOW_CONTACTS_BLOCK = "show",
@@ -26,6 +7,8 @@ const
     SHOW_NO_RESULTS = "show";
 
 const
+    tablet = 1023,
+    body = document.querySelector("body") as HTMLElement,
     contactsBlock = document.querySelector(".contactsBlock") as HTMLElement,
     contactsList = document.querySelector(".contactsBlock__list") as HTMLElement,
     contactsBtn = document.querySelector(".contactsBtn") as HTMLElement,
@@ -34,7 +17,6 @@ const
     searchInput = document.querySelector(".forms__input--search input") as HTMLInputElement,
     noResults = document.querySelector(".contactsBlock__noResults") as HTMLElement;
 
-const selectedEmails = []
 
 
 // Variable after Loading the Contacts Template
@@ -51,13 +33,17 @@ contactItem.forEach((contact) => {
 });
 emailInput.addEventListener("blur", checkEmailInputValue)
 
-searchInput.addEventListener("input", handleSearch)
+searchInput.addEventListener("input", searchContacts)
 
 
 // Functions
 
 function showContactsBlock() {
     contactsBlock.classList.add(SHOW_CONTACTS_BLOCK)
+
+    if (window.innerWidth < tablet) {
+        body.style.overflow = "hidden"
+    }
 }
 
 function hideContactsBlock() {
@@ -67,6 +53,9 @@ function hideContactsBlock() {
         contact.classList.remove(HIDE_CONTACT)
     });
     noResults.classList.remove(SHOW_NO_RESULTS)
+    if (window.innerWidth < tablet) {
+        body.style.overflow = "initial"
+    }
 }
 
 function getContacts() {
@@ -103,7 +92,7 @@ function checkEmailInputValue() {
     }
 }
 
-function handleSearch(e) {
+function searchContacts(e) {
     const value = e.currentTarget.value.toLowerCase();
 
     const filteredContacts = [...contactItem].filter((contact) =>
@@ -111,11 +100,11 @@ function handleSearch(e) {
     );
 
     contactItem.forEach((contact) => {
-        contact.classList.add(HIDE_CONTACT)
+        contact.parentElement?.classList.add(HIDE_CONTACT)
         noResults.classList.add(SHOW_NO_RESULTS)
     });
     filteredContacts.forEach((contact) => {
-        contact.classList.remove(HIDE_CONTACT)
+        contact.parentElement?.classList.remove(HIDE_CONTACT)
         noResults.classList.remove(SHOW_NO_RESULTS)
     });
 

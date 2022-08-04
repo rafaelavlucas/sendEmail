@@ -36,6 +36,7 @@ $red: #DF6251;
    --focus: #{$neu-09};
    --bgBody: #{$neu-03};
    --blockBg: #{$neu-02};
+   --iconClose:#{$neu-07};
    // Main Nav
    --mainNavBg: #{$neu-01};
    --settingsOutline: #{$neu-02};
@@ -58,12 +59,14 @@ $red: #DF6251;
    --inputText: #{$neu-07};
    --inputLabel: #{$neu-06};
    // Contacts
-   --iconClose:#{$neu-07};
    --contactItem: #{$neu-06};
    --contactItemHover: #{$neu-08};
    --contactItemBg: #{$neu-01};
+   // Notification Bar
+   --notificationBg: #{$neu-01};
+   --notificationText:#{$neu-07};
 
-   .logo {
+   .mainNav__logo {
       path:first-child {
          fill: $neu-09
       }
@@ -74,6 +77,7 @@ $red: #DF6251;
    --focus: #{$neu-01};
    --bgBody: #{$neu-10};
    --blockBg: #{$neu-09};
+   --iconClose: #{$neu-03};
    // Main Nav
    --mainNavBg: #{$neu-08};
    --settingsOutline: #{$neu-07};
@@ -96,12 +100,14 @@ $red: #DF6251;
    --inputText: #{$neu-04};
    --inputLabel: #{$neu-04};
    // Contacts
-   --iconClose: #{$neu-03};
    --contactItem: #{$neu-06};
    --contactItemHover: #{$neu-01};
    --contactItemBg: #{$neu-08};
+      // Notification Bar
+      --notificationBg: #{$neu-08};
+      --notificationText:#{$neu-05};
 
-   .logo {
+   .mainNav__logo {
       path:first-child {
          fill: $neu-04
       }
@@ -180,3 +186,8 @@ $red: #DF6251;
       stop-color: $m-06--light;
    }
 }
+
+// Shadows 
+$sha-01: 0px 4px 8px rgba(0, 0, 0, 0.15);
+$sha-02: 0px 4px 80px rgba(0, 0, 0, 0.15);
+$sha-03: 0px 4px 36px rgba(0, 0, 0, 0.05);

@@ -1,5 +1,11 @@
 .categoryBlock {
     $this: &;
+    margin-right: 24px;
+
+    @include tablet {
+        order: 2;
+        margin-right: 0px;
+    }
 
     &:before {
         content: "";
@@ -36,9 +42,7 @@
         align-items: center;
     }
 
-    @include tablet {
-        order: 2;
-    }
+
 
     &__list {
         @include tablet {
@@ -46,7 +50,7 @@
             height: 0;
             pointer-events: none;
             transition: all 0.3s 0.1s ease, opacity 0.15s ease;
-            overflow: hidden;
+            // overflow: hidden;
         }
     }
 

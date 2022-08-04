@@ -19,16 +19,27 @@ fontButtons.forEach((font) => {
 });
 
 
+
+// Functions
+
 if (window.innerWidth > 1023) {
     blocks.style.height = messageBlockContent.scrollHeight + "px";
-
 }
-
-
 
 function setBlocksHeight() {
     if (window.innerWidth < tabletWidth) return
     setTimeout(() => {
         blocks.style.height = messageBlockContent.scrollHeight + "px";
     }, 300);
-} 
+}
+
+function refreshOnResize() {
+    if ("ontouchstart" in document.documentElement) return;
+    window.onresize = () => {
+        setTimeout(() => {
+            location.reload()
+        }, 800);
+    }
+}
+
+refreshOnResize()

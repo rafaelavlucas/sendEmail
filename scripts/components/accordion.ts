@@ -1,41 +1,5 @@
-interface CategoriesInterface {
-   category: string;
-   messages: string[]
-}
+import categories from "../content/categories.json"
 
-const categories: CategoriesInterface[] = [
-   {
-      category: "Categoria 1",
-      messages: [
-         "Far far away, behind the world mountains, far from the countries Vokalia and Consonantia, theres live the blind texts. Separated",
-         "Far far away, behind the world mountains, far from the countries Vokalia!",
-         "Far far away, behind the world mountains, far from the countries Vokalia and Consonantia, theres live the blind texts. Far far away, behind the world mountains, far from the countries Vokalia and Consonantia, theres live the blind texts."
-      ],
-   },
-   {
-      category: "Categoria 2",
-      messages: [
-
-         "Far far away, behind the world mountains, far from the countries Vokalia!"
-      ],
-   },
-   {
-      category: "Categoria 3",
-      messages: [
-         "Far far away, behind the world mountains, far from the countries Vokalia and Consonantia, theres live the blind texts. Separated",
-         "Far far away, behind the world mountains, far from the countries Vokalia!",
-         "Far far away, behind the world mountains, far from the countries Vokalia and Consonantia, theres live the blind texts. Far far away, behind the world mountains, far from the countries Vokalia and Consonantia, theres live the blind texts."
-      ],
-   },
-   {
-      category: "Categoria 4",
-      messages: [
-         "Far far away, behind the world mountains, far from the countries Vokalia and Consonantia, theres live the blind texts. Separated",
-         "Far far away, behind the world mountains, far from the countries Vokalia!",
-         "Far far away, behind the world mountains, far from the countries Vokalia and Consonantia, theres live the blind texts. Far far away, behind the world mountains, far from the countries Vokalia and Consonantia, theres live the blind texts."
-      ],
-   },
-];
 
 // Variables
 const
@@ -53,6 +17,8 @@ const categoryBlockContent = document.querySelector(".categoryBlock .block__cont
 let paddingBottom = window.getComputedStyle(categoryBlockContent, null).getPropertyValue('padding-bottom').split('px')[0];
 const expandButton = document.querySelector(".categoryBlock__expandBtn") as HTMLElement;
 const changeFontBtn = document.querySelectorAll(".mainNav__font") as NodeListOf<HTMLElement>;
+const contactsButton = document.querySelector(".contactsBtn") as HTMLElement;
+
 
 
 // Variable after Loading the Accordion Templates
@@ -79,6 +45,7 @@ changeFontBtn.forEach((font) => {
    font.addEventListener("click", updateAccordionHeight);
 });
 
+contactsButton.addEventListener("click", updateAccordionHeight)
 
 
 
@@ -175,10 +142,10 @@ function expandListOnMobile() {
 }
 
 function scrollToItem(currentAccordion) {
-   if (window.innerWidth < tablet) return
+   // if (window.innerWidth < tablet) return
 
    setTimeout(() => {
-      currentAccordion.scrollIntoView({ block: "end", behavior: "smooth", inline: 'end' });
+      currentAccordion.scrollIntoView({ block: "nearest", behavior: "smooth", inline: 'end' });
    }, 200);
 }
 

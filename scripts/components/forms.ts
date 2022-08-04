@@ -1,4 +1,4 @@
-import { text } from "stream/consumers";
+
 
 // Variables
 const
@@ -71,8 +71,9 @@ function validateInputText(inputValue, target) {
 // }
 
 function error(el) {
+    const message = el.querySelector(FORMS_MESSAGE_SELECTOR);
     el.classList.add("error");
-    el.querySelector(FORMS_MESSAGE_SELECTOR).innerText = el.dataset.required
+    if (message) message.innerText = el.dataset.required
 }
 
 function hideError(e) {
